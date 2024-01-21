@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-start-screen',
@@ -7,7 +8,12 @@ import { Component } from '@angular/core';
 })
 export class StartScreenComponent {
 
+  headerLinks = ['Upload','Video List', 'Logout'];
+  footerLinks = ['Data Protection', 'Imprint'];
+  activeLink = this.headerLinks[0];
+  background: ThemePalette = undefined;
 
+  videoListActive = true ;
 
 
 
