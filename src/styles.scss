@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; overflow-y: auto}
+
+@import url("../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css");
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background: #000;
+    max-width: 1440px;
+    margin: auto;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+    background: url("../src/assets/img/backround.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
