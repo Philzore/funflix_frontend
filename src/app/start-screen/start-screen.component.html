@@ -2,14 +2,9 @@
     <div>
         <img src="./assets/img/logo.png">
     </div>
-    <!-- <div class="links">
-        <a>Upload</a>
-        <a>Impress</a>
-        <a>Logout</a>
-    </div> -->
     <div>
         <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
-            <a *ngFor="let link of headerLinks; track link" mat-tab-link (click)="activeLink = link"
+            <a *ngFor="let link of headerLinks;let track link" mat-tab-link (click)="activeLink = link"
                 [active]="activeLink == link"> {{link}} </a>
         </nav>
         <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
@@ -24,9 +19,12 @@
 
     <section [hidden]="!videoListActive" class="video-list">
         <span>Video List</span>
+        <div>
+            <h2 class="text-white">Video´s from Socke</h2>
+        </div>
     </section>
 
-    
+
 
 </main>
 
@@ -36,11 +34,8 @@
     <div>
         <img src="./assets/img/logo.png">
     </div>
-    <div>
-        <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
-            <a *ngFor="let link of footerLinks; track link" mat-tab-link (click)="activeLink = link"
-                [active]="activeLink == link"> {{link}} </a>
-        </nav>
-        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+    <div class="footer-links">
+        <a>Data Protection</a>
+        <a>Imprint</a>
     </div>
 </footer>

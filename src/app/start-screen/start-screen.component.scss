@@ -1,5 +1,6 @@
 .header {
     position: absolute;
+    height: 110px;
     top: 0;
     left: 0;
     right: 0;
@@ -10,6 +11,7 @@
     max-width: 1440px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 1;
+
 
     img {
         height: 100px;
@@ -34,6 +36,7 @@ a {
 
 footer {
     position: absolute;
+    height: 110px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -44,6 +47,7 @@ footer {
     max-width: 1440px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 1;
+    
 
     img {
         height: 100px;
@@ -54,15 +58,34 @@ footer {
             cursor: pointer;
         }
     }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        a {
+            &:hover{
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 main {
     position: relative;
-    margin-top: 150px;
+    margin-top: 125px;
     z-index: 2;
-
+    height: calc(100% - 250px) ; //remove height from header and footer
 
     span {
         color: white;
     }
+
+}
+
+
+.text-white {
+    color: white;
 }
