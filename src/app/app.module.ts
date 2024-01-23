@@ -12,6 +12,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from './message-snackbar/message-snackbar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTabsModule} from '@angular/material/tabs';
+import { NgImageSliderModule } from 'ng-image-slider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -29,6 +31,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSnackBarModule,
     MatSidenavModule,
     MatTabsModule,
+    NgImageSliderModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

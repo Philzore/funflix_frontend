@@ -18,9 +18,18 @@
     </section>
 
     <section [hidden]="!videoListActive" class="video-list">
-        <span>Video List</span>
-        <div>
-            <h2 class="text-white">Video´s from Socke</h2>
+        <span class="text-white">Video List</span>
+        <div *ngFor="let user of users">
+            <h2 class="text-white">Video´s from {{user}}</h2>
+            <div class="video-preview">
+                <div class="video-slider">
+                    <ng-image-slider #nav [images]="imageObject" [infinite]="true" [autoSlide]="5"
+                        [imageSize]="{width: '25%', height: 250}" slideImage="1"></ng-image-slider>
+                </div>
+                <div class="add-video">
+                    +
+                </div>
+            </div>
         </div>
     </section>
 
