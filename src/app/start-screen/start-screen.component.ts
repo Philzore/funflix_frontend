@@ -3,6 +3,7 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogUploadVideoComponent } from '../dialog-upload-video/dialog-upload-video.component';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-start-screen',
@@ -17,7 +18,7 @@ export class StartScreenComponent {
 
   videoListActive = true;
 
-  users = ['Socke', 'Snow' , 'Krümel', 'Schlapp'] ;
+  users = ['Socke', 'Snow', 'Krümel', 'Schlapp'];
 
 
   imageObject = [{
@@ -36,19 +37,34 @@ export class StartScreenComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-  ) {}
+    private sharedService: SharedService,
+  ) { }
 
-  openLink(){
-    
+  openLink() {
     switch (this.activeLink) {
       case 'Upload':
-        console.log('Socke');
-        this.router.navigate(['start-screen/add_video']);
-        this.dialog.open(DialogUploadVideoComponent);
+        this.openUploadDialog();
+
         break;
-    
+
+      case 'Logout':
+        this.router.navigate(['']);
+
+        break;
+
       default:
         break;
+    }
+  }
+
+  openUploadDialog() {
+    this.router.navigate(['start-screen/add_video']);
+    this.dialog.open(DialogUploadVideoComponent);
+  }
+
+  clearLocalStorage() {
+    if (!this.sharedService.rememberMeActiv) {
+      localStorage.clear();
     }
   }
 }

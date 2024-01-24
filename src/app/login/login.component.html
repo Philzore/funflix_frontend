@@ -6,7 +6,7 @@
     <!-- login form -->
     <div [hidden]="!showLogin" class="form-wrapper">
         <h2>Sign In</h2>
-        <form action="#">
+        <form onsubmit="login() ; return false">
             <div class="form-control">
                 <input type="text" required>
                 <label>Email</label>
@@ -18,7 +18,7 @@
             <button type="submit">Sign In</button>
             <div class="form-help">
                 <div class="remember-me">
-                    <input type="checkbox" id="remember-me">
+                    <input type="checkbox" (change)="rememberMe = !rememberMe">
                     <label for="remember-me">Remember me</label>
                 </div>
                 <a href="#">Need help?</a>
@@ -30,7 +30,7 @@
     <!-- register form -->
     <div [hidden]="showLogin" class="form-wrapper">
         <h2>Register</h2>
-        <form action="#">
+        <form onsubmit=" ; return false" >
             <div class="form-control">
                 <input type="text" required>
                 <label>Email</label>

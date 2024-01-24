@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -8,16 +9,27 @@ import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.c
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  rememberMe = false;
   showLogin = true;
 
   durationInSeconds = 5;
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private sharedService: SharedService,
+  ) { }
 
   openSnackBar(message) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
-      data: { message : message},
+      data: { message: message },
     });
+  }
+
+  login() {
+    //save remember me checkbox in shared service
+    this.sharedService.rememberMeActiv = this.rememberMe ;
+
+
   }
 }
