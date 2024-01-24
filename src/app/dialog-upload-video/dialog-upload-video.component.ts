@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-upload-video',
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './dialog-upload-video.component.scss'
 })
 export class DialogUploadVideoComponent {
+
+  constructor(
+    public dialogRef:MatDialogRef<DialogUploadVideoComponent>,
+  ) {
+
+  }
 
 }

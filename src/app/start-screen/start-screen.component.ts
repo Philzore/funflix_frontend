@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { DialogUploadVideoComponent } from '../dialog-upload-video/dialog-upload-video.component';
 
 @Component({
   selector: 'app-start-screen',
@@ -9,7 +12,6 @@ import { ThemePalette } from '@angular/material/core';
 export class StartScreenComponent {
 
   headerLinks = ['Upload', 'Video List', 'Logout'];
-  footerLinks = ['Data Protection', 'Imprint'];
   activeLink = this.headerLinks[0];
   background: ThemePalette = undefined;
 
@@ -29,5 +31,24 @@ export class StartScreenComponent {
     video: 'https://sanjayv.github.io/ng-image-slider/contents/assets/video/movie2.mp4',
     posterImage: "https://slotuniverses.co.uk/wp-content/uploads/sites/12030/upload_fed1091b34dcf8203c0729c4faa62315.png",
     title: 'Youtube example one with title.'
-  }]
+  }];
+
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+  ) {}
+
+  openLink(){
+    
+    switch (this.activeLink) {
+      case 'Upload':
+        console.log('Socke');
+        this.router.navigate(['start-screen/add_video']);
+        this.dialog.open(DialogUploadVideoComponent);
+        break;
+    
+      default:
+        break;
+    }
+  }
 }

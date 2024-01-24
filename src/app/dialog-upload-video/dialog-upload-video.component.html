@@ -1,1 +1,19 @@
-<p>dialog-upload-video works!</p>
+<div class="form-wrapper">
+    <h2>Upload your Video</h2>
+    <form action="#">
+        <div class="form-control">
+            <input type="text" required>
+            <label>Video Name</label>
+        </div>
+        <div class="form-control">
+            <input type="text" required>
+            <label>Video description</label>
+        </div>
+        <div>
+            <input type="file" required>
+            <label>Path to your video</label>
+        </div>
+        <button type="submit">Upload</button>
+        <button type="button" (click)="dialogRef.close()">Cancel</button>
+    </form>
+</div>
