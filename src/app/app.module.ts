@@ -16,6 +16,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NgImageSliderModule } from 'ng-image-slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpInterceptorService } from './service/http-interceptor.service';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -35,7 +36,8 @@ import { HttpInterceptorService } from './service/http-interceptor.service';
     MatTabsModule,
     NgImageSliderModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule
     
   ],
   providers: [{
