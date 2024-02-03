@@ -6,13 +6,13 @@
     <!-- login form -->
     <div [hidden]="!showLogin" class="form-wrapper">
         <h2>Sign In</h2>
-        <form (ngSubmit)="login()">
+        <form #loginForm>
             <div class="form-control">
-                <input type="text" id="email" required>
+                <input type="text" #loginEmail required>
                 <label>Email</label>
             </div>
             <div class="form-control">
-                <input type="password" id="password" required>
+                <input type="password" #loginPassword required>
                 <label>Password</label>
             </div>
             <button type="submit">Sign In</button>
@@ -30,21 +30,21 @@
     <!-- register form -->
     <div [hidden]="showLogin" class="form-wrapper">
         <h2>Register</h2>
-        <form onsubmit=" login(); return false" >
+        <form #registerForm >
             <div class="form-control">
-                <input type="text" required>
+                <input type="text" #registerEmail required>
                 <label>Email</label>
             </div>
             <div class="form-control">
-                <input type="text" required>
+                <input type="text" #registerUsername required>
                 <label>Username</label>
             </div>
             <div class="form-control">
-                <input type="password" required>
+                <input type="password" #registerPassword required>
                 <label>Password</label>
             </div>
             <div class="form-control">
-                <input type="password" required>
+                <input type="password" #registerConfirmPassword required>
                 <label>Confirm Password</label>
             </div>
             <button>Register</button>

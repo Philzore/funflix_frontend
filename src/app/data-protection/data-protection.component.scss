@@ -1,0 +1,17 @@
+.content {
+    margin: 10px;
+    color: white;
+    display: flex;
+    position: relative;
+
+    a{
+        color: white;
+    }
+}
+
+.back-icon {
+    height: 48px;
+    width: 48px;
+
+    cursor: pointer;
+}

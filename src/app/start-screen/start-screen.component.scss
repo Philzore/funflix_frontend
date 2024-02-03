@@ -5,6 +5,7 @@
     left: 0;
     right: 0;
     margin: auto;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,6 +40,7 @@ footer {
     left: 0;
     right: 0;
     margin: auto;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -66,9 +68,12 @@ footer {
             color: white;
             font-size: 24px;
             font-weight: 800;
+            text-decoration: none;
+            
 
             &:hover {
                 cursor: pointer;
+                
                 text-decoration: underline;
             }
         }

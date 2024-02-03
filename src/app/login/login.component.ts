@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 import { SharedService } from '../service/shared.service';
@@ -11,13 +11,22 @@ import { User } from '../models/user.class';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  // @ViewChild('email') email:ElementRef;
-  // @ViewChild('password') password:ElementRef;
+export class LoginComponent implements AfterViewInit {
+  //Form Elements
+  @ViewChild('loginForm') loginForm: ElementRef;
+  @ViewChild('registerForm') registerFrom: ElementRef;
+  //login Elements
+  @ViewChild('loginEmail') loginEmail: ElementRef;
+  @ViewChild('loginPassword') loginPassword: ElementRef;
+  //register Elements
+  @ViewChild('registerEmail') registerEmail: ElementRef;
+  @ViewChild('registerUsername') registerUsername: ElementRef;
+  @ViewChild('registerPassword') registerPassword: ElementRef;
+  @ViewChild('registerConfirmPassword') registerConfirmPassword: ElementRef;
 
   rememberMe = false;
   showLogin = true;
-  loginInProgress = false ;
+  loginInProgress = false;
 
   durationInSeconds = 5;
 
@@ -28,26 +37,33 @@ export class LoginComponent {
     public router: Router,
   ) { }
 
-  openSnackBar(message) {
+  ngAfterViewInit(): void {
+    this.loginForm.nativeElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.login();
+    });
+
+    this.registerFrom.nativeElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.register();
+    });
+  }
+
+  openSnackBar(message:string) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
-      data: { message: message },
+      data: { 'message': message },
     });
   }
 
   login() {
-    debugger;
+
     //save remember me checkbox in shared service
-    // this.sharedService.rememberMeActiv = this.rememberMe;
-
-    // let user = new User({username: this.email.nativeElement.value, email : this.email.nativeElement.value});
-
-    // console.log(user);
-
-    // debugger;
+    this.sharedService.rememberMeActiv = this.rememberMe;
 
 
-    // this.loginInProgress = true;
+
+    this.loginInProgress = true;
     // try {
     //   let resp: any = await this.backendService.loginWithUsernameAndPassword(this.email.nativeElement.value , this.password.nativeElement.value);
     //   if (resp.success == false) {
@@ -56,14 +72,32 @@ export class LoginComponent {
     //      localStorage.setItem('token', resp['token']);
     //      localStorage.setItem('user', resp['name']);
 
-        
+
     //     //router navigate
     //   }
     // } catch (err) {
 
     // }
-    // this.loginInProgress = false;
-
-    return false;
+    this.loginInProgress = false;
   }
+
+  register() {
+    if (this.checkConfirmPassword()) {
+      let user = new User({ 'username': this.registerUsername.nativeElement.value, 'email': this.registerEmail.nativeElement.value, 'password': this.registerPassword.nativeElement.value });
+
+      console.log(user);
+    }
+
+
+  }
+
+  checkConfirmPassword() {
+    if (this.registerPassword.nativeElement.value === this.registerConfirmPassword.nativeElement.value) {
+      return true;
+    } else {
+      this.openSnackBar('Passwords are not equal');
+      return false;
+    }
+  }
+
 }

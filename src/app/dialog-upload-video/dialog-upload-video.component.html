@@ -10,9 +10,10 @@
             <label>Video description</label>
         </div>
         <div class="choose-file-container">
-            <input type="file" required>
+            <input type="file" #fileInput required>
             <label>Path to your video</label>
         </div>
+        <div class="file-info" #fileInfo></div>
         <button type="submit">Upload</button>
         <button type="button" (click)="dialogRef.close()">Cancel</button>
     </form>
