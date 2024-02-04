@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +18,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-video.component';
 
 
 
@@ -25,7 +27,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     AppComponent,
     LoginComponent,
     MessageSnackbarComponent,
-    StartScreenComponent
+    StartScreenComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -37,8 +40,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     NgImageSliderModule,
     MatDialogModule,
     HttpClientModule,
-    MatFormFieldModule
-    
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

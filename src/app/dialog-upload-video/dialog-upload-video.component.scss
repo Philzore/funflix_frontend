@@ -1,4 +1,3 @@
-
 .form-wrapper {
     border-radius: 4px;
     padding: 70px;
@@ -11,44 +10,44 @@
 //     flex-direction: column;
 //     color: white;
 
-    
+
 // }
 
-/* Stil für den Dateieingabe-Container */
+
 .choose-file-container {
     position: relative;
-    margin-bottom: 20px; /* Platz unter dem Dateieingabe-Container */
-    
+    margin-bottom: 20px;
     border-radius: 5px;
-    cursor: pointer;
+
     &:hover {
-        cursor: pointer;
+        cursor: pointer !important;
         background-color: #555;
     }
-    
-}
 
-/* Stil für den Dateieingabe-Text */
-.choose-file-container label {
-    display: block;
-    background-color: #333; /* Hintergrundfarbe */
-    color: #fff; /* Textfarbe */
-    padding: 10px 15px; /* Innenabstand */
-    border-radius: 5px; /* Abrundung der Ecken */
-    
-}
+    label {
+        display: block;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
 
-/* Verstecke den tatsächlichen Dateieingabe-Button */
-.choose-file-container input[type="file"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    
-   
-    
+        &:hover {
+            cursor: pointer !important;
+            background-color: #555;
+        }
+    }
+
+    input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: -1;
+        
+    }
+
 }
 
 
