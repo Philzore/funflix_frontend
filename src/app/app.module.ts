@@ -18,7 +18,13 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-video.component';
+
+
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+
 
 
 
@@ -43,6 +49,10 @@ import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
