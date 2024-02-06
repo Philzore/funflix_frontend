@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment.development';
 import { lastValueFrom } from 'rxjs';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -15,30 +16,26 @@ export class BackendService {
   ) { }
 
 
-  // loginWithUsernameAndPassword(username: string, password: string) {
-  //   const url = environment.baseUrl + "/login/";
-  //   const body = {
-  //     "username": username,
-  //     "password": password
-  //   };
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //   });
-
-  //   return lastValueFrom(this.http.post(url, body, { headers, withCredentials: false }));
-  // }
-
-
-  registerNewUser(username: string, password: string, email: string, firstName: string, lastName: string) {
-    const url = environment.baseUrl + "/register/";
+  loginWithUsernameAndPassword(username: string, password: string) {
+    const url = environment.baseUrl + "/login/";
     const body = {
       "username": username,
-      "password": password,
-      "email": email,
-      "firstName": firstName,
-      "lastName": lastName,
+      "password": password
     };
+
     return lastValueFrom(this.http.post(url, body));
+  }
+
+
+  registerNewUser(user:User) {
+    const url = environment.baseUrl + "/register/";
+    const body = user;
+    return lastValueFrom(this.http.post(url, body));
+  }
+
+  activateAccount(uid:string, token:string) {
+    const url = environment.baseUrl + `/activate/${uid}/${token}/`;
+  
+    return lastValueFrom(this.http.get(url));
   }
 }

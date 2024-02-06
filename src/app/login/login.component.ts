@@ -56,36 +56,36 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
-  login() {
+  async login() {
 
     //save remember me checkbox in shared service
     this.sharedService.rememberMeActiv = this.rememberMe;
 
-
-
     this.loginInProgress = true;
-    // try {
-    //   let resp: any = await this.backendService.loginWithUsernameAndPassword(this.email.nativeElement.value , this.password.nativeElement.value);
-    //   if (resp.success == false) {
-    //     //TODO error
-    //   } else {
-    //      localStorage.setItem('token', resp['token']);
-    //      localStorage.setItem('user', resp['name']);
+    try {
+      let resp: any = await this.backendService.loginWithUsernameAndPassword(this.loginEmail.nativeElement.value , this.loginPassword.nativeElement.value);
+      if (resp.success == false) {
+        //TODO error
+      } else {
+        console.log(resp);
+         localStorage.setItem('token', resp['token']);
+         localStorage.setItem('user', resp['username']);
+        //router navigate
+        this.router.navigateByUrl('start-screen');
+      }
+    } catch (err) {
 
-
-    //     //router navigate
-    //   }
-    // } catch (err) {
-
-    // }
+    }
     this.loginInProgress = false;
   }
 
-  register() {
+  async register() {
     if (this.checkConfirmPassword()) {
       let user = new User({ 'username': this.registerUsername.nativeElement.value, 'email': this.registerEmail.nativeElement.value, 'password': this.registerPassword.nativeElement.value });
 
-      console.log(user);
+      let resp = await this.backendService.registerNewUser(user);
+
+      this.openSnackBar(resp['error']);
     }
 
 
