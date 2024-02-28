@@ -65,18 +65,24 @@ export class LoginComponent implements AfterViewInit {
     try {
       let resp: any = await this.backendService.loginWithUsernameAndPassword(this.loginEmail.nativeElement.value , this.loginPassword.nativeElement.value);
       if (resp.success == false) {
-        //TODO error
+        this.openSnackBar('Login failed');
       } else {
         console.log(resp);
-         localStorage.setItem('token', resp['token']);
-         localStorage.setItem('user', resp['username']);
+        localStorage.setItem('token', resp['token']);
+        localStorage.setItem('user', resp['username']);
         //router navigate
         this.router.navigateByUrl('start-screen');
       }
     } catch (err) {
-
+      this.openSnackBar(err);
     }
+    
     this.loginInProgress = false;
+  }
+
+  async loginAsGuest() {
+    this.loginInProgress = true ;
+    let resp = await this.backendService.loginAsGuest();
   }
 
   async register() {

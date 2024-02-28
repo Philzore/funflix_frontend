@@ -26,6 +26,15 @@ export class BackendService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+  loginAsGuest() {
+    const url = environment.baseUrl + "/guest/";
+    const body = {
+      
+    };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
+
 
   registerNewUser(user:User) {
     const url = environment.baseUrl + "/register/";

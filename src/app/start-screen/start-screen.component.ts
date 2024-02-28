@@ -49,11 +49,17 @@ export class StartScreenComponent {
 
       case 'Logout':
         this.router.navigate(['']);
-
+        this.deleteLocalStorage();
         break;
 
       default:
         break;
+    }
+  }
+
+  deleteLocalStorage(){
+    if (!this.sharedService.rememberMeActiv) {
+      localStorage.clear();
     }
   }
 
