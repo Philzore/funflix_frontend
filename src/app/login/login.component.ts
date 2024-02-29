@@ -49,7 +49,7 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
-  openSnackBar(message:string) {
+  openSnackBar(message: string) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
       data: { 'message': message },
@@ -63,8 +63,8 @@ export class LoginComponent implements AfterViewInit {
 
     this.loginInProgress = true;
     try {
-      let resp: any = await this.backendService.loginWithUsernameAndPassword(this.loginEmail.nativeElement.value , this.loginPassword.nativeElement.value);
-      if (resp.success == false) {
+      let resp: any = await this.backendService.loginWithUsernameAndPassword(this.loginEmail.nativeElement.value, this.loginPassword.nativeElement.value);
+      if (resp['success'] == false) {
         this.openSnackBar('Login failed');
       } else {
         console.log(resp);
@@ -76,13 +76,29 @@ export class LoginComponent implements AfterViewInit {
     } catch (err) {
       this.openSnackBar(err);
     }
-    
+
     this.loginInProgress = false;
   }
 
   async loginAsGuest() {
-    this.loginInProgress = true ;
-    let resp = await this.backendService.loginAsGuest();
+    this.loginInProgress = true;
+    try {
+      let resp = await this.backendService.loginAsGuest();
+      if (resp['success'] == false) {
+        this.openSnackBar('Login failed');
+      } else {
+        console.log(resp);
+        localStorage.setItem('token', resp['token']);
+        localStorage.setItem('user', resp['username']);
+        //router navigate
+        this.router.navigateByUrl('start-screen');
+      }
+    } catch (err) {
+      this.openSnackBar(err);
+    }
+
+    this.loginInProgress = false;
+
   }
 
   async register() {
