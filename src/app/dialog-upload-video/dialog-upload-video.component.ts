@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Video } from '../models/video.class';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../service/backend.service';
 
 @Component({
   selector: 'app-dialog-upload-video',
@@ -14,8 +15,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   @ViewChild('uploadForm') uploadForm: ElementRef;
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('fileInfo') fileInfo: ElementRef;
-  @ViewChild('videoTitle') videoTitle: ElementRef;
-  @ViewChild('videoDesc') videoDesc: ElementRef;
+ 
 
   fileToUpload: Video = new Video() ;
 
@@ -23,6 +23,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogUploadVideoComponent>,
+    private backendService: BackendService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -54,9 +55,17 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   }
 
   postFile() {
-    this.uploadInProgress = true ;
-    console.log('Upload :', this.fileToUpload) ;
-    this.uploadInProgress = false ;
+    const fileInputElement = this.fileInput.nativeElement;
+    const selectedFile = fileInputElement.files[0];
+    this.fileToUpload.file = selectedFile ;
+    if (selectedFile) {
+      
+      this.uploadInProgress = true ;
+      console.log('Upload :', this.fileToUpload) ;
+      this.backendService.addVideo(this.fileToUpload);
+      this.uploadInProgress = false ;
+    }
+    
   }
 
 }

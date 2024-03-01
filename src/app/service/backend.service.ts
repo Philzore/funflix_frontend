@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../environments/environment.development';
 import { lastValueFrom } from 'rxjs';
 import { User } from '../models/user.class';
+import { Video } from '../models/video.class';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,11 @@ export class BackendService {
     const url = environment.baseUrl + `/activate/${uid}/${token}/`;
   
     return lastValueFrom(this.http.get(url));
+  }
+
+  addVideo(video:Video){
+    const url = environment.baseUrl + `/start-screen/add_video/`;
+    const body = video;
+    return lastValueFrom(this.http.post(url,body));
   }
 }
