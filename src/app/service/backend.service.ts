@@ -49,9 +49,10 @@ export class BackendService {
     return lastValueFrom(this.http.get(url));
   }
 
-  addVideo(video:Video){
+  addVideo(video){
     const url = environment.baseUrl + `/start-screen/add_video/`;
     const body = video;
+    
     return lastValueFrom(this.http.post(url,body));
   }
 }

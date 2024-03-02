@@ -1,13 +1,13 @@
 export class Video {
     title:string;
     description:string;
-    file:File | null ;
+    file:File  ;
 
 
     constructor(obj ?:any ) {
         this.title = obj ? obj.title : '';
         this.description = obj ? obj.description : '';
-        this.file = obj ? obj.file : null;
+        this.file = obj ? obj.file : {};
     }
 
     public toJSON() {

@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Video } from '../models/video.class';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../service/backend.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 
 @Component({
   selector: 'app-dialog-upload-video',
@@ -15,16 +17,26 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   @ViewChild('uploadForm') uploadForm: ElementRef;
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('fileInfo') fileInfo: ElementRef;
- 
 
-  fileToUpload: Video = new Video() ;
 
-  uploadInProgress = false ;
+  fileToUpload: Video = new Video();
+
+  uploadInProgress = false;
+
+  durationInSeconds = 5;
 
   constructor(
+    private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogUploadVideoComponent>,
     private backendService: BackendService,
   ) { }
+
+  openSnackBar(message: string) {
+    this._snackBar.openFromComponent(MessageSnackbarComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: { 'message': message },
+    });
+  }
 
   ngAfterViewInit(): void {
     this.uploadForm.nativeElement.addEventListener('submit', (event) => {
@@ -54,18 +66,32 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  postFile() {
+  async postFile() {
+
     const fileInputElement = this.fileInput.nativeElement;
     const selectedFile = fileInputElement.files[0];
-    this.fileToUpload.file = selectedFile ;
+    this.fileToUpload.file = selectedFile;
+
+
+    const formData = new FormData();
+    formData.append('file', this.fileToUpload.file);
+    formData.append('title', this.fileToUpload.title);
+    formData.append('description', this.fileToUpload.description);
+
+
     if (selectedFile) {
-      
-      this.uploadInProgress = true ;
-      console.log('Upload :', this.fileToUpload) ;
-      this.backendService.addVideo(this.fileToUpload);
-      this.uploadInProgress = false ;
+      this.uploadInProgress = true;
+      try {
+        let resp = await this.backendService.addVideo(formData);
+        if (resp['success'] == false) {
+          this.openSnackBar(resp['message']);
+        }
+      } catch (err) {
+        this.openSnackBar(err);
+      }
+      this.uploadInProgress = false;
     }
-    
+
   }
 
 }

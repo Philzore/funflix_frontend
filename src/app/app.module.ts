@@ -18,6 +18,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 import {VgCoreModule} from '@videogular/ngx-videogular/core';
@@ -52,7 +53,8 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    MatProgressSpinnerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

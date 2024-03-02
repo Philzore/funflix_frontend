@@ -1,6 +1,6 @@
 <div class="form-wrapper">
     <h2>Upload your Video</h2>
-    <form #uploadForm>
+    <form #uploadForm enctype="multipart/form-data">
         <div class="form-control">
             <input #videoTitle type="text" [(ngModel)]="fileToUpload.title" [ngModelOptions]="{standalone: true}" required>
             <label>Video Name</label>
@@ -13,7 +13,10 @@
             <input id="fileInput" type="file"  #fileInput required>
             <label for="fileInput">Select your video file</label>
         </div>
-        <div class="file-info" #fileInfo></div>
+        <div class="file-info" #fileInfo>
+            No file selected
+            
+        </div>
         <button type="submit">Upload</button>
         <button type="button" (click)="dialogRef.close()">Cancel</button>
     </form>
