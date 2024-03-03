@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BackendService } from '../service/backend.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-upload-video',
@@ -26,6 +27,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   durationInSeconds = 5;
 
   constructor(
+    public router: Router,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogUploadVideoComponent>,
     private backendService: BackendService,
@@ -55,6 +57,11 @@ export class DialogUploadVideoComponent implements AfterViewInit {
         this.fileInfo.nativeElement.innerHTML = '';
       }
     });
+  }
+
+  closeDialog() {
+    this.dialogRef.close() ;
+    this.router.navigateByUrl('start-screen');
   }
 
   formatBytes(bytes, decimals = 2) {

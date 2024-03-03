@@ -55,4 +55,22 @@ export class BackendService {
     
     return lastValueFrom(this.http.post(url,body));
   }
+
+  getUsers() {
+    const url = environment.baseUrl + `/start-screen/get_user/`
+
+    return lastValueFrom(this.http.get(url));
+  }
+
+  getThumbnailsAndVideos(){
+    const url = environment.baseUrl + `/start-screen/get_thumbnails/`
+
+    return lastValueFrom(this.http.get(url));
+  }
+
+  getVideos() {
+
+  }
+
+  
 }

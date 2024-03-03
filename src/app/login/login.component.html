@@ -8,8 +8,8 @@
         <h2>Sign In</h2>
         <form #loginForm>
             <div class="form-control">
-                <input type="text" #loginEmail required>
-                <label>Email</label>
+                <input type="text" #loginEmail (change)="autofillPassword()" required>
+                <label>Username</label>
             </div>
             <div class="form-control">
                 <input type="password" #loginPassword required>

@@ -174,10 +174,6 @@ form .form-help :where(label, a) {
 }
 
 @media (max-width: 740px) {
-    body::before {
-        display: none;
-    }
-
     nav,
     .form-wrapper {
         padding: 20px;

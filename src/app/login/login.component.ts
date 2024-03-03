@@ -56,10 +56,32 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * autofill password if remember me checkbox is active while login
+   * 
+   */
+  autofillPassword() {
+    let rememberedUser = localStorage.getItem('username');
+    if (rememberedUser) {
+      if (rememberedUser === this.loginEmail.nativeElement.value) {
+        this.loginPassword.nativeElement.value = localStorage.getItem('userpassword');
+      }
+    }
+  }
+
+  /**
+   * login the user
+   * 
+   */
   async login() {
 
     //save remember me checkbox in shared service
     this.sharedService.rememberMeActiv = this.rememberMe;
+
+    if (this.rememberMe) {
+      localStorage.setItem('username', this.loginEmail.nativeElement.value);
+      localStorage.setItem('userpassword', this.loginPassword.nativeElement.value);
+    }
 
     this.loginInProgress = true;
     try {
@@ -80,6 +102,10 @@ export class LoginComponent implements AfterViewInit {
     this.loginInProgress = false;
   }
 
+  /**
+   * login in as guest
+   * 
+   */
   async loginAsGuest() {
     this.loginInProgress = true;
     try {
@@ -101,6 +127,10 @@ export class LoginComponent implements AfterViewInit {
 
   }
 
+  /**
+   * register new user
+   * 
+   */
   async register() {
     if (this.checkConfirmPassword()) {
       let user = new User({ 'username': this.registerUsername.nativeElement.value, 'email': this.registerEmail.nativeElement.value, 'password': this.registerPassword.nativeElement.value });
@@ -109,10 +139,13 @@ export class LoginComponent implements AfterViewInit {
 
       this.openSnackBar(resp['error']);
     }
-
-
   }
 
+  /**
+   * check if confirm password is equal with normal password
+   * 
+   * @returns password check ok or nok
+   */
   checkConfirmPassword() {
     if (this.registerPassword.nativeElement.value === this.registerConfirmPassword.nativeElement.value) {
       return true;

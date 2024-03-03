@@ -1,16 +1,20 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogUploadVideoComponent } from '../dialog-upload-video/dialog-upload-video.component';
 import { SharedService } from '../service/shared.service';
+import { BackendService } from '../service/backend.service';
+import { User } from '../models/user.class';
+import { Video } from '../models/video.class';
+import { Thumbnail } from '../models/thumbnail.class';
 
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
   styleUrls: ['./start-screen.component.scss']
 })
-export class StartScreenComponent {
+export class StartScreenComponent implements OnInit {
 
   headerLinks = ['Upload', 'Video List', 'Logout'];
   activeLink = this.headerLinks[0];
@@ -18,7 +22,7 @@ export class StartScreenComponent {
 
   videoListActive = true;
 
-  users = ['Socke', 'Snow', 'Krümel', 'Schlapp'];
+  users = [];
 
 
   imageObject = [{
@@ -38,7 +42,52 @@ export class StartScreenComponent {
     private router: Router,
     private dialog: MatDialog,
     private sharedService: SharedService,
+    private backendService: BackendService,
   ) { }
+
+  ngOnInit() {
+    this.getUsersFromBackend();
+    this.getThumbnailsAndVideosFromBackend();
+  }
+
+  async getUsersFromBackend() {
+    try {
+      let resp: any = await this.backendService.getUsers();
+      for (let index = 0; index < resp.length; index++) {
+        const userName = resp[index].username;
+        let newUser = new User();
+        newUser.username = userName;
+        this.users.push(newUser);
+      }
+      console.log(this.users);
+    } catch (error) {
+
+    }
+  }
+
+  async getThumbnailsAndVideosFromBackend() {
+    try {
+      let resp: any = await this.backendService.getThumbnailsAndVideos();
+      for (const videoInfo of resp) {
+        for (const user of this.users) {
+          if (user.username === videoInfo.author) {
+            console.log('Drin');
+            const video = new Video({
+              id: videoInfo.video_id,
+              title: videoInfo.video_title,
+              description: videoInfo.video_description,
+              url: videoInfo.video_filename,
+              thumbnail : new Thumbnail({videoId :videoInfo.video_id, url : videoInfo.thumbnail_filename}),
+            });
+            user.addVideo(video);
+            console.log('nachher' ,user);
+          }
+        }
+      }
+    } catch (error) {
+
+    }
+  }
 
   openLink() {
     switch (this.activeLink) {
@@ -57,7 +106,7 @@ export class StartScreenComponent {
     }
   }
 
-  deleteLocalStorage(){
+  deleteLocalStorage() {
     if (!this.sharedService.rememberMeActiv) {
       localStorage.clear();
     }

@@ -26,7 +26,7 @@
     <section [hidden]="!videoListActive" class="video-list">
         <span class="text-white">Video List</span>
         <div *ngFor="let user of users">
-            <h2 class="text-white">Video´s from {{user}}</h2>
+            <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
                 <div class="video-slider">
                     <ng-image-slider #nav [images]="imageObject" [infinite]="true" [autoSlide]="5"
