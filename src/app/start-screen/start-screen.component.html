@@ -29,8 +29,8 @@
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
                 <div class="video-slider">
-                    <ng-image-slider #nav [images]="imageObject" [infinite]="true" [autoSlide]="5"
-                        [imageSize]="{width: '25%', height: 250}" slideImage="1"></ng-image-slider>
+                    <ng-image-slider class="img-slider" #nav [images]="imageObject" [infinite]="true" [autoSlide]="500"
+                        [imageSize]="{width: '25%', height: 250 }" slideImage="1"></ng-image-slider>
                 </div>
                 <div class="add-video" (click)="openUploadDialog()">
                     +

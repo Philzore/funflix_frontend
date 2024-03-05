@@ -135,3 +135,8 @@ main {
 .text-white {
     color: white;
 }
+
+.custom-image-main img{
+    object-fit: cover;
+}
+
