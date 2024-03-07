@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -8,13 +8,14 @@ import { BackendService } from '../service/backend.service';
 import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
+import { ImageObject } from '../models/imageObject.class';
 
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
   styleUrls: ['./start-screen.component.scss']
 })
-export class StartScreenComponent implements OnInit {
+export class StartScreenComponent implements OnInit, AfterViewInit {
 
   headerLinks = ['Upload', 'Video List', 'Logout'];
   activeLink = this.headerLinks[0];
@@ -23,9 +24,9 @@ export class StartScreenComponent implements OnInit {
   videoListActive = true;
 
   users = [];
+  singleVideoSource = '' ;
 
-
-  imageObject = [];
+  sliderReady = false ;
     
     
   //   {
@@ -44,13 +45,21 @@ export class StartScreenComponent implements OnInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private sharedService: SharedService,
+    public sharedService: SharedService,
     private backendService: BackendService,
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('user')) {
+      this.sharedService.currentUser = localStorage.getItem('user');
+    }
+    
+  }
+
+  ngAfterViewInit(): void {
     this.getUsersFromBackend();
     this.getThumbnailsAndVideosFromBackend();
+    this.sliderReady = true ;
   }
 
   async getUsersFromBackend() {
@@ -84,7 +93,7 @@ export class StartScreenComponent implements OnInit {
             });
             user.addVideo(video);
             console.log('nachher' ,user);
-            this.fillImageSlider(user);
+            // this.fillImageSlider(user);
           }
         }
       }
@@ -93,14 +102,27 @@ export class StartScreenComponent implements OnInit {
     }
   }
 
-  fillImageSlider(user:User){
-    for (let videoDetail of user.videos) {
-      const videoURL = `http://127.0.0.1:8000/media/`+ videoDetail.url ;
-      const thumbnailURL = `http://127.0.0.1:8000/media/`+ videoDetail.thumbnail.url ;
-      const videoTitle = videoDetail.title ;
-      this.imageObject.push({video: videoURL, posterImage: thumbnailURL, title: videoTitle});
-      console.log(this.imageObject);
-    }
+  // fillImageSlider(user:User){
+  //   for (let videoDetail of user.videos) {
+  //     const videoURL = `http://127.0.0.1:8000/media/`+ videoDetail.url ;
+  //     const thumbnailURL = `http://127.0.0.1:8000/media/`+ videoDetail.thumbnail.url ;
+  //     const videoTitle = videoDetail.title ;
+  //     let newImageObject = new ImageObject();
+  //     newImageObject.video = videoURL;
+  //     newImageObject.posterImage = thumbnailURL;
+  //     newImageObject.title = videoTitle;
+  //     user.
+  //     // this.imageObject.push({video: videoURL, posterImage: thumbnailURL, title: videoTitle});
+  //     console.log(this.imageObject);
+  //   }
+  // }
+
+  showSingleVideo(imageObject:ImageObject) {
+    this.router.navigateByUrl('/start-screen/show_video');
+    this.videoListActive = false ;
+    console.log('heyho');
+    console.log(imageObject);
+    this.singleVideoSource = imageObject.video;
   }
 
   openLink() {

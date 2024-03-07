@@ -35,6 +35,19 @@ body::before {
     background-repeat: no-repeat;
 }
 
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div img{
+    object-fit: cover;
+    
+}
+
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div {
+    &:hover{
+        transition: all 225ms ease-in-out;
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}
+
 
 /* width */
 ::-webkit-scrollbar {

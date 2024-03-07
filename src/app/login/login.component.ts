@@ -92,6 +92,7 @@ export class LoginComponent implements AfterViewInit {
         console.log(resp);
         localStorage.setItem('token', resp['token']);
         localStorage.setItem('user', resp['username']);
+        this.sharedService.currentUser = resp['username'];
         //router navigate
         this.router.navigateByUrl('start-screen');
       }

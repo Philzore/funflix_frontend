@@ -87,10 +87,16 @@ main {
     height: calc(100% - 250px); //remove height from header and footer
     overflow-y: auto;
 
+    .video-list {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
     .video-preview {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid lightgray;
+        min-height: 280px;
     }
 
     .video-slider {
@@ -136,7 +142,7 @@ main {
     color: white;
 }
 
-.custom-image-main img{
-    object-fit: cover;
-}
+
+
+
 
