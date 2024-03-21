@@ -54,3 +54,15 @@
 .file-info {
     color: white;
 }
+
+mat-spinner {
+    height: 50px !important;
+    margin-bottom: 10px;
+}
+
+.upload-spinner {
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

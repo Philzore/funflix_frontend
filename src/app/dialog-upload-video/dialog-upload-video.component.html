@@ -17,7 +17,11 @@
             No file selected
             
         </div>
-        <button type="submit">Upload</button>
+        <div class="upload-spinner">
+            <mat-spinner [hidden]="!uploadInProgress"></mat-spinner>
+            <button [hidden]="uploadInProgress" type="submit">Upload</button>
+        </div>
+        
         <button type="button" (click)="closeDialog()">Cancel</button>
     </form>
 </div>

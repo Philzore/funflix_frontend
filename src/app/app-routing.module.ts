@@ -11,11 +11,16 @@ import { ActivateScreenComponent } from './activate-screen/activate-screen.compo
 
 
 const routes: Routes = [
-  {path: '' , component: LoginComponent},
-  {path: 'start-screen' , component: StartScreenComponent, children: [{path: 'add_video', component: DialogUploadVideoComponent}]},
-  {path: 'imprint' , component: ImprintComponent},
-  {path: 'data-protection' , component: DataProtectionComponent},
-  {path: 'activate/:uidb64/:token', component : ActivateScreenComponent},
+  { path: '', component: LoginComponent },
+  {
+    path: 'start-screen', component: StartScreenComponent, children:[
+      { path: 'add_video', component: DialogUploadVideoComponent },
+      { path: 'show_video/:title/:resolution', component: StartScreenComponent }
+    ]
+  },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'data-protection', component: DataProtectionComponent },
+  { path: 'activate/:uidb64/:token', component: ActivateScreenComponent },
 ];
 
 @NgModule({

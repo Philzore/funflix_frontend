@@ -5,6 +5,7 @@ import { SharedService } from '../service/shared.service';
 import { BackendService } from '../service/backend.service';
 import { Router } from '@angular/router';
 import { User } from '../models/user.class';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,8 @@ export class LoginComponent implements AfterViewInit {
   loginInProgress = false;
 
   durationInSeconds = 5;
+
+  color : ThemePalette= 'primary' ; 
 
   constructor(
     private _snackBar: MatSnackBar,

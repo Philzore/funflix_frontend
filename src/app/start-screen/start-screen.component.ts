@@ -9,11 +9,11 @@ import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
 import { ImageObject } from '../models/imageObject.class';
-
+import { CommonModule } from '@angular/common';  
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
-  styleUrls: ['./start-screen.component.scss']
+  styleUrls: ['./start-screen.component.scss'],
 })
 export class StartScreenComponent implements OnInit, AfterViewInit {
 
@@ -118,7 +118,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   // }
 
   showSingleVideo(imageObject:ImageObject) {
-    this.router.navigateByUrl('/start-screen/show_video');
+    this.router.navigateByUrl('/start-screen/show_video/tiger/720');
     this.videoListActive = false ;
     console.log('heyho');
     console.log(imageObject);
@@ -129,6 +129,11 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     switch (this.activeLink) {
       case 'Upload':
         this.openUploadDialog();
+
+        break;
+      
+      case 'Video List':
+        this.videoListActive = true;
 
         break;
 

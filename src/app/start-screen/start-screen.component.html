@@ -12,7 +12,6 @@
 </header>
 
 <main>
-    <button (click)="videoListActive = !videoListActive">Toggle View</button>
     <section [hidden]="videoListActive" class="view">
         <span>Video watching</span>
         <vg-player>
@@ -24,7 +23,6 @@
     </section>
 
     <section [hidden]="!videoListActive" class="video-list">
-        <span class="text-white">Video List</span>
         <div *ngFor="let user of users" class="single-list">
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">

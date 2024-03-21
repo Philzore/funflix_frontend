@@ -1,7 +1,9 @@
 html,
 body {
     height: 100%;
-    overflow-y: auto
+    overflow-y: auto;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 @import url("../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css");

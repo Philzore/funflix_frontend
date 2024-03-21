@@ -6,11 +6,12 @@ import { BackendService } from '../service/backend.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 import { Router } from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dialog-upload-video',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatProgressSpinnerModule],
   templateUrl: './dialog-upload-video.component.html',
   styleUrl: './dialog-upload-video.component.scss'
 })

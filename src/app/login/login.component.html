@@ -1,7 +1,6 @@
 <section>
     <nav>
-        <a href="#"><img src="./assets/img/logo.png"
-                alt="logo"></a>
+        <a href="#"><img src="./assets/img/logo.png" alt="logo"></a>
     </nav>
     <!-- login form -->
     <div [hidden]="!showLogin" class="form-wrapper">
@@ -15,8 +14,11 @@
                 <input type="password" #loginPassword required>
                 <label>Password</label>
             </div>
-            <button type="submit">Sign In</button>
-            <button type="button" (click)="loginAsGuest()">Log in as Guest</button>
+            <div class="login-spinner">
+                <mat-spinner *ngIf="loginInProgress" [color]="color"></mat-spinner>
+                <button *ngIf="!loginInProgress" type="submit">Sign In</button>
+            </div>
+            <button *ngIf="!loginInProgress" type="button" (click)="loginAsGuest()">Log in as Guest</button>
             <div class="form-help">
                 <div class="remember-me">
                     <input type="checkbox" (change)="rememberMe = !rememberMe">
@@ -30,7 +32,7 @@
     <!-- register form -->
     <div [hidden]="showLogin" class="form-wrapper">
         <h2>Register</h2>
-        <form #registerForm >
+        <form #registerForm>
             <div class="form-control">
                 <input type="text" #registerEmail required>
                 <label>Email</label>
