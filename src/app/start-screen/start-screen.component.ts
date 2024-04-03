@@ -9,7 +9,8 @@ import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
 import { ImageObject } from '../models/imageObject.class';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
@@ -24,11 +25,33 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   videoListActive = true;
 
   users = [];
-  singleVideoSource = '' ;
+  singleVideoSource = '';
 
-  sliderReady = false ;
-    
-    
+  sliderReady = false;
+
+  customOptions: OwlOptions = {
+    loop: true,
+    autoplay: true,
+    center: true,
+    dots: true,
+    autoHeight: true,
+    autoWidth: false,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 3
+      }
+    },
+    nav: true
+  }
   //   {
   //   video: 'https://youtu.be/tYa6OLQHrEc',
   //   title: 'Youtube example one with title.',
@@ -53,14 +76,17 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('user')) {
       this.sharedService.currentUser = localStorage.getItem('user');
     }
-    
+
   }
 
   ngAfterViewInit(): void {
     this.getUsersFromBackend();
     this.getThumbnailsAndVideosFromBackend();
-    this.sliderReady = true ;
+    this.sliderReady = true;
   }
+
+
+
 
   async getUsersFromBackend() {
     try {
@@ -89,10 +115,10 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
               title: videoInfo.video_title,
               description: videoInfo.video_description,
               url: videoInfo.video_filename,
-              thumbnail : new Thumbnail({videoId :videoInfo.video_id, url : videoInfo.thumbnail_filename}),
+              thumbnail: new Thumbnail({ videoId: videoInfo.video_id, url: videoInfo.thumbnail_filename }),
             });
             user.addVideo(video);
-            console.log('nachher' ,user);
+            console.log('nachher', user);
             // this.fillImageSlider(user);
           }
         }
@@ -117,9 +143,9 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  showSingleVideo(imageObject:ImageObject) {
+  showSingleVideo(imageObject: ImageObject) {
     this.router.navigateByUrl('/start-screen/show_video/tiger/720');
-    this.videoListActive = false ;
+    this.videoListActive = false;
     console.log('heyho');
     console.log(imageObject);
     this.singleVideoSource = imageObject.video;
@@ -131,7 +157,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         this.openUploadDialog();
 
         break;
-      
+
       case 'Video List':
         this.videoListActive = true;
 

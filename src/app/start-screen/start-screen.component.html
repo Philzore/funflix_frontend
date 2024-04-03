@@ -3,7 +3,7 @@
         <img src="./assets/img/logo.png">
     </div>
     <div>
-        <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel" >
+        <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
             <a *ngFor="let link of headerLinks;let track link" mat-tab-link (click)="activeLink = link; openLink()"
                 [active]="activeLink == link"> {{link}} </a>
         </nav>
@@ -19,16 +19,33 @@
                 <source [src]="singleVideoSource" type="video/mp4">
             </video>
         </vg-player>
-          
+
     </section>
 
     <section [hidden]="!videoListActive" class="video-list">
         <div *ngFor="let user of users" class="single-list">
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
-                <div *ngIf="user.imageObject.length > 0" class="video-slider">
-                    <ng-image-slider *ngIf="sliderReady" class="img-slider" #nav [images]="user.imageObject" [imagePopup]="false" [infinite]="false" [autoSlide]="500"
-                       (imageClick)="showSingleVideo(user.imageObject[$event])" [imageSize]="{width: '25%', height: 250 }" slideImage="1"></ng-image-slider>
+                <div *ngIf="user.imageObject.length > 0" class="video-slider"> <!---->
+                    <!-- <ngx-slick-carousel class="carousel img-slider" #slickModal="slick-carousel" [config]="slideConfig"
+                        (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
+                        (beforeChange)="beforeChange($event)">
+                        @for (slideImage of user.imageObject; track slideImage.posterImage) {
+                        <div ngxSlickItem class="slide">
+                            <img src="{{ slideImage.posterImage }}" (click)="showSingleVideo(user.imageObject)" alt="" width="100%">
+                            <h3 class="text-white">{{slideImage.title}}</h3>
+                        </div>
+                        }
+                    </ngx-slick-carousel> -->
+                    <owl-carousel-o [options]="customOptions">
+
+                        <ng-container *ngFor="let slideImage of user.imageObject; let i = index">
+                          <ng-template carouselSlide [id]="slideImage.title">
+                            <img class="slide-img" [src]="slideImage.posterImage"  [title]="slideImage.title">
+                          </ng-template>
+                        </ng-container>
+                    
+                      </owl-carousel-o>
                 </div>
                 <div *ngIf="user.imageObject.length == 0" class="text-white">User uploaded no videos, sorry </div>
                 <div *ngIf="user.username == sharedService.currentUser" class="add-video" (click)="openUploadDialog()">

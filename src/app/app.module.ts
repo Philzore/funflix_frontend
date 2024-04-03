@@ -14,7 +14,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from './message-snackbar/message-snackbar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTabsModule} from '@angular/material/tabs';
-import { NgImageSliderModule } from 'ng-image-slider';
+
 import {MatDialogModule} from '@angular/material/dialog';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -25,8 +25,7 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
-
-
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -44,7 +43,6 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     MatSnackBarModule,
     MatSidenavModule,
     MatTabsModule,
-    NgImageSliderModule,
     MatDialogModule,
     HttpClientModule,
     MatFormFieldModule,
@@ -54,7 +52,9 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    
+    CarouselModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

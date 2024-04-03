@@ -19,6 +19,8 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   @ViewChild('uploadForm') uploadForm: ElementRef;
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('fileInfo') fileInfo: ElementRef;
+  @ViewChild('spinner') spinner: ElementRef;
+  @ViewChild('uploadBtn') uploadBtn: ElementRef;
 
 
   fileToUpload: Video = new Video();
@@ -88,7 +90,8 @@ export class DialogUploadVideoComponent implements AfterViewInit {
 
 
     if (selectedFile) {
-      this.uploadInProgress = true;
+      this.addDisplayNone(this.uploadBtn);
+      this.removeDisplayNone(this.spinner);
       try {
         let resp = await this.backendService.addVideo(formData);
         if (resp['success'] == false) {
@@ -97,9 +100,18 @@ export class DialogUploadVideoComponent implements AfterViewInit {
       } catch (err) {
         this.openSnackBar(err);
       }
-      this.uploadInProgress = false;
+      this.addDisplayNone(this.spinner);
+      this.removeDisplayNone(this.uploadBtn);
     }
 
+  }
+
+  addDisplayNone(element:ElementRef) {
+    element.nativeElement.classList.add('d-none');
+  }
+
+  removeDisplayNone(element:ElementRef){
+    element.nativeElement.classList.remove('d-none');
   }
 
 }
