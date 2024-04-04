@@ -27,6 +27,9 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { VideoScreenComponent } from './video-screen/video-screen.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     LoginComponent,
     MessageSnackbarComponent,
     StartScreenComponent,
-
+    FooterComponent,
+    HeaderComponent,
+    VideoScreenComponent,
   ],
   imports: [
     BrowserModule,

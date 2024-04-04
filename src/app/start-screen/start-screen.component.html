@@ -1,26 +1,7 @@
-<header class="header">
-    <div>
-        <img src="./assets/img/logo.png">
-    </div>
-    <div>
-        <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
-            <a *ngFor="let link of headerLinks;let track link" mat-tab-link (click)="activeLink = link; openLink()"
-                [active]="activeLink == link"> {{link}} </a>
-        </nav>
-        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-    </div>
-</header>
+<app-header></app-header>
 
 <main>
-    <section [hidden]="videoListActive" class="view">
-        <span>Video watching</span>
-        <vg-player>
-            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-                <source [src]="singleVideoSource" type="video/mp4">
-            </video>
-        </vg-player>
 
-    </section>
 
     <section [hidden]="!videoListActive" class="video-list">
         <div *ngFor="let user of users" class="single-list">
@@ -37,11 +18,12 @@
                         </div>
                         }
                     </ngx-slick-carousel> -->
-                    <owl-carousel-o [options]="customOptions">
+                    <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging">
 
                         <ng-container *ngFor="let slideImage of user.imageObject; let i = index">
-                          <ng-template carouselSlide [id]="slideImage.title">
-                            <img class="slide-img" [src]="slideImage.posterImage"  [title]="slideImage.title">
+                          <ng-template carouselSlide [id]="">  
+                            <a class="hover-highlight" [owlRouterLink]="['/show_video/' ,slideImage.title, '720p']" [stopLink]="isDragging"><img class="slide-img" [src]="slideImage.posterImage"  [title]="slideImage.title"></a>
+                            <h2 class="text-red">{{slideImage.title}}</h2>
                           </ng-template>
                         </ng-container>
                     
@@ -56,12 +38,4 @@
     </section>
 </main>
 
-<footer>
-    <div>
-        <img src="./assets/img/logo.png">
-    </div>
-    <div class="footer-links">
-        <a href="data-protection">Data Protection</a>
-        <a href="imprint">Imprint</a>
-    </div>
-</footer>
+<app-footer></app-footer>

@@ -1,0 +1,13 @@
+<app-header></app-header>
+
+<section class="view">
+    <span>Video watching</span>
+    <vg-player>
+        <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
+            <source [src]="singleVideoSource" type="video/mp4">
+        </video>
+    </vg-player>
+
+</section>
+
+<app-footer></app-footer>

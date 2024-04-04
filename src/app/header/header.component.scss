@@ -1,0 +1,32 @@
+.header {
+    position: absolute;
+    height: 110px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1;
+
+
+    img {
+        height: 100px;
+        width: 100px;
+        object-fit: contain;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    a {
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+}

@@ -1,0 +1,12 @@
+<header class="header">
+    <div>
+        <img src="./assets/img/logo.png">
+    </div>
+    <div>
+        <nav mat-tab-nav-bar [backgroundColor]="background" [tabPanel]="tabPanel">
+            <a *ngFor="let link of headerLinks;let track link" mat-tab-link (click)="activeLink = link; openLink()"
+                [active]="activeLink == link"> {{link}} </a>
+        </nav>
+        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+    </div>
+</header>

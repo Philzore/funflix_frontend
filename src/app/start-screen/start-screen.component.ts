@@ -9,8 +9,10 @@ import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
 import { ImageObject } from '../models/imageObject.class';
-import { CommonModule } from '@angular/common';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+
+
+
 @Component({
   selector: 'app-start-screen',
   templateUrl: './start-screen.component.html',
@@ -18,17 +20,16 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class StartScreenComponent implements OnInit, AfterViewInit {
 
-  headerLinks = ['Upload', 'Video List', 'Logout'];
-  activeLink = this.headerLinks[0];
-  background: ThemePalette = undefined;
+ 
 
   videoListActive = true;
 
   users = [];
-  singleVideoSource = '';
+  
 
   sliderReady = false;
 
+  isDragging: boolean;
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
@@ -143,50 +144,11 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  showSingleVideo(imageObject: ImageObject) {
-    this.router.navigateByUrl('/start-screen/show_video/tiger/720');
-    this.videoListActive = false;
-    console.log('heyho');
-    console.log(imageObject);
-    this.singleVideoSource = imageObject.video;
-  }
 
-  openLink() {
-    switch (this.activeLink) {
-      case 'Upload':
-        this.openUploadDialog();
-
-        break;
-
-      case 'Video List':
-        this.videoListActive = true;
-
-        break;
-
-      case 'Logout':
-        this.router.navigate(['']);
-        this.deleteLocalStorage();
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  deleteLocalStorage() {
-    if (!this.sharedService.rememberMeActiv) {
-      localStorage.clear();
-    }
-  }
 
   openUploadDialog() {
     this.router.navigate(['start-screen/add_video']);
     this.dialog.open(DialogUploadVideoComponent);
   }
 
-  clearLocalStorage() {
-    if (!this.sharedService.rememberMeActiv) {
-      localStorage.clear();
-    }
-  }
 }
