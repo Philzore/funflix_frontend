@@ -27,6 +27,8 @@
     "rxjs": "~7.8.0",
     "slick-carousel": "^1.8.1",
     "tslib": "^2.3.0",
+    "undici": "^6.13.0",
+    "vite": "^5.2.8",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

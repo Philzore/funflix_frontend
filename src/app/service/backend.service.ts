@@ -68,7 +68,10 @@ export class BackendService {
     return lastValueFrom(this.http.get(url));
   }
 
-  getVideos() {
+  getVideo(title, resolution) {
+    const url = environment.baseUrl + `/show_video/${title}/${resolution}/`
+
+    return lastValueFrom(this.http.get(url, {responseType : 'blob'}));
 
   }
 

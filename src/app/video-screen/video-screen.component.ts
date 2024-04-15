@@ -1,29 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { ImageObject } from '../models/imageObject.class';
+import { ActivatedRoute } from '@angular/router';
+import { BackendService } from '../service/backend.service';
 
 @Component({
   selector: 'app-video-screen',
   templateUrl: './video-screen.component.html',
   styleUrl: './video-screen.component.scss'
 })
-export class VideoScreenComponent {
+export class VideoScreenComponent implements OnInit {
   singleVideoSource = '';
 
 
-  constructor(){}
+  constructor(
+    private route: ActivatedRoute,
+    private backendService: BackendService,
+  ) { }
 
-
-  showSingleVideo(imageObject: ImageObject) {
-    // if (!this.isDragging) {
-    //   this.router.navigateByUrl('/start-screen/show_video/tiger/720');
-    //   this.videoListActive = false;
-
-    //   console.log(imageObject);
-    //   this.singleVideoSource = imageObject.video;
-    // }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const title = params.get('title');
+      const resolution = params.get('resolution');
+      console.log('Title:', title);
+      console.log('Auflösung:', resolution);
+      this.loadVideo(title, resolution);
+    });
 
   }
 
-  switchVideoResolution(){}
+
+  async loadVideo(title, resolution) {
+    try {
+      let resp: Blob = await this.backendService.getVideo(title, resolution);
+      const videoBlob = new Blob([resp], { type: 'video/mp4' });
+      this.singleVideoSource = URL.createObjectURL(videoBlob);
+      console.log('Blob URL:', this.singleVideoSource);
+    } catch (error) {
+      console.error('Error loading video:', error);
+    }
+  }
+
+  onVideoLoaded() {
+    console.log('loaded');
+  }
+
+  switchVideoResolution() { }
 }
