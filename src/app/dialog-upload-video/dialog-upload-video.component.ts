@@ -1,17 +1,14 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Video } from '../models/video.class';
-import { FormsModule } from '@angular/forms';
 import { BackendService } from '../service/backend.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 import { Router } from '@angular/router';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-dialog-upload-video',
-  standalone: true,
-  imports: [FormsModule, MatProgressSpinnerModule],
   templateUrl: './dialog-upload-video.component.html',
   styleUrl: './dialog-upload-video.component.scss'
 })
@@ -78,6 +75,8 @@ export class DialogUploadVideoComponent implements AfterViewInit {
 
   async postFile() {
 
+    this.uploadInProgress = true ;
+
     const fileInputElement = this.fileInput.nativeElement;
     const selectedFile = fileInputElement.files[0];
     this.fileToUpload.file = selectedFile;
@@ -104,14 +103,16 @@ export class DialogUploadVideoComponent implements AfterViewInit {
       this.removeDisplayNone(this.uploadBtn);
     }
 
+    this.uploadInProgress = false ;
+
   }
 
   addDisplayNone(element:ElementRef) {
-    element.nativeElement.classList.add('d-none');
+    // element.nativeElement.classList.add('d-none');
   }
 
   removeDisplayNone(element:ElementRef){
-    element.nativeElement.classList.remove('d-none');
+    // element.nativeElement.classList.remove('d-none');
   }
 
 }

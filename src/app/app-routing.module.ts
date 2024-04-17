@@ -7,6 +7,7 @@ import { DataProtectionComponent } from './data-protection/data-protection.compo
 import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-video.component';
 import { ActivateScreenComponent } from './activate-screen/activate-screen.component';
 import { VideoScreenComponent } from './video-screen/video-screen.component';
+import { DialogVideoDescriptionComponent } from './dialog-video-description/dialog-video-description.component';
 
 
 
@@ -18,7 +19,10 @@ const routes: Routes = [
       { path: 'add_video', component: DialogUploadVideoComponent },
     ]
   },
-  { path: 'show_video/:title/:resolution', component: VideoScreenComponent},
+  { path: 'show_video/:title/:resolution', component: VideoScreenComponent, children: [
+    {path: 'description', component: DialogVideoDescriptionComponent},
+  ]
+  },
   { path: 'imprint', component: ImprintComponent },
   { path: 'data-protection', component: DataProtectionComponent },
   { path: 'activate/:uidb64/:token', component: ActivateScreenComponent },

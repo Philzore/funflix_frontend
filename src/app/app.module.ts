@@ -30,6 +30,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { VideoScreenComponent } from './video-screen/video-screen.component';
+import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-video.component';
+import { DialogVideoDescriptionComponent } from './dialog-video-description/dialog-video-description.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { VideoScreenComponent } from './video-screen/video-screen.component';
     FooterComponent,
     HeaderComponent,
     VideoScreenComponent,
+    DialogUploadVideoComponent,
+    DialogVideoDescriptionComponent,
   ],
   imports: [
     BrowserModule,

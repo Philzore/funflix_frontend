@@ -1,0 +1,39 @@
+.wrapper {
+    border-radius: 4px;
+    padding: 70px;
+    width: 450px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+section {
+    margin-bottom: 16px;
+    overflow-wrap: break-word;
+}
+
+textarea {
+    width: 310px;
+    height: 100px;
+}
+
+.btn-container {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    width: 150px;
+    height: 40px;
+    background-color: #e50914;
+    border: 1px solid #e50914;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover{
+        background-color: #cc0000;
+    }
+}

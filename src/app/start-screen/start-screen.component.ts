@@ -51,7 +51,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         items: 3
       }
     },
-    nav: true
+    nav: false
   }
   //   {
   //   video: 'https://youtu.be/tYa6OLQHrEc',

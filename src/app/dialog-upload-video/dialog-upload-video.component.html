@@ -17,8 +17,14 @@
             No file selected
         </div>
         <div class="upload-spinner">
-            <mat-spinner class="d-none" #spinner></mat-spinner>
-            <button class="" type="submit" #uploadBtn>Upload</button>
+            <div *ngIf="uploadInProgress" class="loader">
+                <div class="orbe" style="--index: 0"></div>
+                <div class="orbe" style="--index: 1"></div>
+                <div class="orbe" style="--index: 2"></div>
+                <div class="orbe" style="--index: 3"></div>
+                <div class="orbe" style="--index: 4"></div>
+            </div>
+            <button *ngIf="!uploadInProgress" class="" type="submit" #uploadBtn>Upload</button>
         </div>
         
         <button type="button" (click)="closeDialog()">Cancel</button>

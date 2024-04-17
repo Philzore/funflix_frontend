@@ -68,11 +68,30 @@ export class BackendService {
     return lastValueFrom(this.http.get(url));
   }
 
-  getVideo(title, resolution) {
-    const url = environment.baseUrl + `/show_video/${title}/${resolution}/`
+  getVideo(title:string, resolution:string) {
+    const url = environment.baseUrl + `/show_video/${title}/${resolution}/` ;
 
     return lastValueFrom(this.http.get(url, {responseType : 'blob'}));
 
+  }
+
+  deleteVideo(title:string, resolution:string) {
+    const url = environment.baseUrl + `/show_video/${title}/${resolution}/` ;
+
+    return lastValueFrom(this.http.delete(url));
+  }
+
+  getVideoDescription(title:string, resolution:string) {
+    const url = environment.baseUrl + `/show_video/${title}/${resolution}/description/` ;
+
+    return lastValueFrom(this.http.get(url));
+  }
+
+  updateVideoDescription(title:string, resolution:string, newDescription:string) {
+    const url = environment.baseUrl + `/show_video/${title}/${resolution}/description/` ;
+    const body = {'description' : newDescription};
+
+    return lastValueFrom(this.http.patch(url,body));
   }
 
   

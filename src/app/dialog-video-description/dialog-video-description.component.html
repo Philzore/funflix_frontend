@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <h2>Video Description</h2>
+
+    <section [hidden]="editMode" class="description-container">{{descriptionText}}</section>
+    <textarea [hidden]="!editMode" [(ngModel)]="descriptionText">{{descriptionText}}</textarea>
+    
+    <div class="btn-container">
+        <button [hidden]="!editMode" (click)="updateDescription()">Save</button>
+        <button [hidden]="editMode" (click)="editMode = true">Edit</button>
+        <button (click)="dialogRef.close()">Close</button>
+    </div>
+    
+
+</div>

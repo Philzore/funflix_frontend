@@ -178,6 +178,19 @@ form .form-help :where(label, a) {
     color: #0071eb;
 }
 
+.slide-img{
+    height: 200px;
+    object-fit: cover;
+}
+
+.owl-dots{
+    margin-top: -20px !important;
+}
+
+.owl-theme {
+    height: 200px;
+}
+
 @media (max-width: 740px) {
     nav,
     .form-wrapper {

@@ -15,7 +15,7 @@ main {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid lightgray;
-        min-height: 280px;
+        min-height: 250px;
     }
 
     .video-slider {
@@ -24,12 +24,12 @@ main {
         text-align: center;
         margin: 0;
         padding: 0;
-        margin-bottom: 25px;
+        // margin-bottom: 25px;
     }
 
     .add-video {
-        height: 250px;
-        width: 25%;
+        height: 200px;
+        width: 20%;
         margin-left: 15px;
         margin-right: 15px;
         border: solid 1px lightgray;
