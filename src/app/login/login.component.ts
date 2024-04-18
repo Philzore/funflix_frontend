@@ -52,6 +52,11 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * open the snackbar with message
+   * 
+   * @param message which shown in snackbar
+   */
   openSnackBar(message: string) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,

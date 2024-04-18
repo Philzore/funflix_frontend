@@ -20,13 +20,10 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class StartScreenComponent implements OnInit, AfterViewInit {
 
- 
-
   videoListActive = true;
 
   users = [];
   
-
   sliderReady = false;
 
   isDragging: boolean;
@@ -53,18 +50,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     },
     nav: false
   }
-  //   {
-  //   video: 'https://youtu.be/tYa6OLQHrEc',
-  //   title: 'Youtube example one with title.',
-  //   alt: 'youtube video'
-  // }, {
-  //   video: 'https://youtu.be/6pxRHBw-k8M',
-  //   alt: 'youtube video'
-  // }, {
-  //   video: 'https://sanjayv.github.io/ng-image-slider/contents/assets/video/movie2.mp4',
-  //   posterImage: "https://slotuniverses.co.uk/wp-content/uploads/sites/12030/upload_fed1091b34dcf8203c0729c4faa62315.png",
-  //   title: 'Youtube example one with title.'
-  // }];
+
 
   constructor(
     private router: Router,
@@ -86,9 +72,10 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     this.sliderReady = true;
   }
 
-
-
-
+  /**
+   * load users from backend
+   * 
+   */
   async getUsersFromBackend() {
     try {
       let resp: any = await this.backendService.getUsers();
@@ -104,13 +91,16 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * get thumbnails and videos from backend and add to right user
+   * 
+   */
   async getThumbnailsAndVideosFromBackend() {
     try {
       let resp: any = await this.backendService.getThumbnailsAndVideos();
       for (const videoInfo of resp) {
         for (const user of this.users) {
           if (user.username === videoInfo.author) {
-            console.log('Drin');
             const video = new Video({
               id: videoInfo.video_id,
               title: videoInfo.video_title,
@@ -119,8 +109,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
               thumbnail: new Thumbnail({ videoId: videoInfo.video_id, url: videoInfo.thumbnail_filename }),
             });
             user.addVideo(video);
-            console.log('nachher', user);
-            // this.fillImageSlider(user);
           }
         }
       }
@@ -129,23 +117,10 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // fillImageSlider(user:User){
-  //   for (let videoDetail of user.videos) {
-  //     const videoURL = `http://127.0.0.1:8000/media/`+ videoDetail.url ;
-  //     const thumbnailURL = `http://127.0.0.1:8000/media/`+ videoDetail.thumbnail.url ;
-  //     const videoTitle = videoDetail.title ;
-  //     let newImageObject = new ImageObject();
-  //     newImageObject.video = videoURL;
-  //     newImageObject.posterImage = thumbnailURL;
-  //     newImageObject.title = videoTitle;
-  //     user.
-  //     // this.imageObject.push({video: videoURL, posterImage: thumbnailURL, title: videoTitle});
-  //     console.log(this.imageObject);
-  //   }
-  // }
-
-
-
+  /**
+   * open dialog to upload new video
+   * 
+   */
   openUploadDialog() {
     this.router.navigate(['start-screen/add_video']);
     this.dialog.open(DialogUploadVideoComponent);

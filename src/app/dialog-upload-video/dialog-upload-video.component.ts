@@ -33,6 +33,11 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     private backendService: BackendService,
   ) { }
 
+  /**
+   * open the snackbar with message
+   * 
+   * @param message which shown in snackbar
+   */
   openSnackBar(message: string) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
@@ -59,11 +64,22 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * close current upload dialog
+   * 
+   */
   closeDialog() {
     this.dialogRef.close() ;
     this.router.navigateByUrl('start-screen');
   }
 
+  /**
+   * format bytes to readable format string
+   * 
+   * @param bytes to converted
+   * @param decimals how much decimal places
+   * @returns formated string of the data size
+   */
   formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -73,46 +89,45 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  async postFile() {
-
+  /**
+   * create form data from the given video file
+   * 
+   */
+  postFile() {
     this.uploadInProgress = true ;
 
     const fileInputElement = this.fileInput.nativeElement;
     const selectedFile = fileInputElement.files[0];
     this.fileToUpload.file = selectedFile;
 
-
     const formData = new FormData();
     formData.append('file', this.fileToUpload.file);
     formData.append('title', this.fileToUpload.title);
     formData.append('description', this.fileToUpload.description);
 
-
     if (selectedFile) {
-      this.addDisplayNone(this.uploadBtn);
-      this.removeDisplayNone(this.spinner);
-      try {
-        let resp = await this.backendService.addVideo(formData);
-        if (resp['success'] == false) {
-          this.openSnackBar(resp['message']);
-        }
-      } catch (err) {
-        this.openSnackBar(err);
-      }
-      this.addDisplayNone(this.spinner);
-      this.removeDisplayNone(this.uploadBtn);
+      this.uploadVideo(formData);
     }
 
     this.uploadInProgress = false ;
 
   }
 
-  addDisplayNone(element:ElementRef) {
-    // element.nativeElement.classList.add('d-none');
+  /**
+   * upload video to backend
+   * 
+   * @param formData of the video file
+   */
+  async uploadVideo(formData) {
+    try {
+      let resp = await this.backendService.addVideo(formData);
+      if (resp['success'] == false) {
+        this.openSnackBar(resp['message']);
+      }
+    } catch (err) {
+      this.openSnackBar(err);
+    }
   }
 
-  removeDisplayNone(element:ElementRef){
-    // element.nativeElement.classList.remove('d-none');
-  }
 
 }

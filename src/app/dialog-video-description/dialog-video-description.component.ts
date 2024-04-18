@@ -22,7 +22,10 @@ export class DialogVideoDescriptionComponent implements OnInit {
       this.loadDescription();
   }
 
-
+  /**
+   * get video description from backend
+   * 
+   */
   async loadDescription() {
     console.log(this.data.title);
     let resp = await this.backendService.getVideoDescription(this.data.title, this.data.resolution);
@@ -34,6 +37,10 @@ export class DialogVideoDescriptionComponent implements OnInit {
     }
   }
 
+  /**
+   * update changed description
+   * 
+   */
   async updateDescription() {
     let resp = await this.backendService.updateVideoDescription(this.data.title, this.data.resolution, this.descriptionText);
 

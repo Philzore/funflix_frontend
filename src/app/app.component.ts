@@ -9,17 +9,24 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent {
   title = 'Funflix_frontend';
 
-  activeComponent = '' ;
+  activeComponent = '';
+  hideHeader = true;
+  hideFooter = true;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.activeComponent = this.getCurrentRouteComponent();
-        console.log('Aktive Komponente:', this.activeComponent);
+        this.checkHide();
       }
     });
   }
 
+  /**
+   * get current active component
+   * 
+   * @returns current active component
+   */
   getCurrentRouteComponent(): string | null {
     let route = this.router.routerState.snapshot.root;
     while (route.firstChild) {
@@ -29,5 +36,19 @@ export class AppComponent {
       return route.component['name'];
     }
     return null;
+  }
+
+  /**
+   * hide header and footer in case of active component
+   * 
+   */
+  checkHide() {
+    if (this.activeComponent == 'LoginComponent' || this.activeComponent == 'DataProtectionComponent' || this.activeComponent == 'ImprintComponent') {
+      this.hideHeader = true;
+      this.hideFooter = true;
+    } else {
+      this.hideHeader = false;
+      this.hideFooter = false;
+    }
   }
 }

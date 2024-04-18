@@ -23,6 +23,10 @@ export class HeaderComponent {
   ) {
   }
 
+  /**
+   * change url when click on a link 
+   * 
+   */
   openLink() {
     switch (this.activeLink) {
       case 'Upload':
@@ -45,11 +49,19 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * open upload dialog
+   * 
+   */
   openUploadDialog() {
     this.router.navigate(['start-screen/add_video']);
     this.dialog.open(DialogUploadVideoComponent);
   }
 
+  /**
+   * delete local storage after logout
+   * 
+   */
   deleteLocalStorage() {
     if (!this.sharedService.rememberMeActiv) {
       localStorage.clear();

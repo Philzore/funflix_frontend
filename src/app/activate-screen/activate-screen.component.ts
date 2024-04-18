@@ -32,6 +32,10 @@ export class ActivateScreenComponent implements AfterViewInit, OnInit{
     }, 2000);
   }
 
+  /**
+   * check if activation token is correct
+   * 
+   */
   async checkActivation() {
     this.route.params.subscribe((params) => {
       this.uidb64 = params['uidb64'];

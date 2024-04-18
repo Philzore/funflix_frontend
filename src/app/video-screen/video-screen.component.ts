@@ -39,6 +39,11 @@ export class VideoScreenComponent implements OnInit {
 
   }
 
+  /**
+   * open the snackbar with message
+   * 
+   * @param message which shown in snackbar
+   */
   openSnackBar(message: string) {
     this._snackBar.openFromComponent(MessageSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
@@ -46,7 +51,13 @@ export class VideoScreenComponent implements OnInit {
     });
   }
 
-  async loadVideo(title, resolution) {
+  /**
+   * load video with given title and resolution
+   * 
+   * @param title of video
+   * @param resolution of video 480p/720p/1080p
+   */
+  async loadVideo(title:string, resolution:string) {
     this.singleVideoSource = '';
     try {
       let resp: Blob = await this.backendService.getVideo(title, resolution);
@@ -59,18 +70,31 @@ export class VideoScreenComponent implements OnInit {
   }
 
   onVideoLoaded() {
-    console.log('loaded');
+    
   }
 
+  /**
+   * change resolution in url
+   * 
+   * @param resolution of video 480p/720p/1080p
+   */
   switchVideoResolution(resolution: string) {
     this.router.navigateByUrl(`/show_video/${this.currentVideoTitle}/${resolution}`);
   }
 
+  /**
+   * open dialog to see the video description
+   * 
+   */
   openVideoDescription() {
     this.router.navigateByUrl(`/show_video/${this.currentVideoTitle}/${this.currentVideoResolution}/description`);
     this.dialog.open(DialogVideoDescriptionComponent, {data: {title : this.currentVideoTitle, resolution: this.currentVideoResolution} });
   }
 
+  /**
+   * delete current active video
+   * 
+   */
   async deletVideo() {
     console.log(this.currentVideoResolution);
     try {
