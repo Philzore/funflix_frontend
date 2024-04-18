@@ -97,7 +97,6 @@ export class LoginComponent implements AfterViewInit {
       if (resp['success'] == false) {
         this.openSnackBar('Login failed');
       } else {
-        console.log(resp);
         localStorage.setItem('token', resp['token']);
         localStorage.setItem('user', resp['username']);
         this.sharedService.currentUser = resp['username'];
@@ -122,7 +121,6 @@ export class LoginComponent implements AfterViewInit {
       if (resp['success'] == false) {
         this.openSnackBar('Login failed');
       } else {
-        console.log(resp);
         localStorage.setItem('token', resp['token']);
         localStorage.setItem('user', resp['username']);
         //router navigate

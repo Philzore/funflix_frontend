@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogUploadVideoComponent } from '../dialog-upload-video/dialog-upload-video.component';
@@ -8,7 +7,6 @@ import { BackendService } from '../service/backend.service';
 import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
-import { ImageObject } from '../models/imageObject.class';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 
@@ -31,7 +29,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     loop: true,
     autoplay: true,
     center: true,
-    dots: true,
+    dots: false,
     autoHeight: true,
     autoWidth: false,
     responsive: {
@@ -85,7 +83,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         newUser.username = userName;
         this.users.push(newUser);
       }
-      console.log(this.users);
     } catch (error) {
 
     }
@@ -124,6 +121,15 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   openUploadDialog() {
     this.router.navigate(['start-screen/add_video']);
     this.dialog.open(DialogUploadVideoComponent);
+  }
+
+  /**
+   * save the author of the clicked video
+   * 
+   * @param author of the current video
+   */
+  saveVideoAuthor(author) {
+    this.sharedService.currentVideoAuthor = author ;
   }
 
 }

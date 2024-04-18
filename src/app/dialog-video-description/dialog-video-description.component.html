@@ -6,7 +6,7 @@
     
     <div class="btn-container">
         <button [hidden]="!editMode" (click)="updateDescription()">Save</button>
-        <button [hidden]="editMode" (click)="editMode = true">Edit</button>
+        <button [hidden]="editMode || !allowEdit" (click)="editMode = true">Edit</button>
         <button (click)="dialogRef.close()">Close</button>
     </div>
     

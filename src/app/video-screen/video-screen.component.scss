@@ -1,3 +1,7 @@
+h1 {
+  color: white;
+}
+
 .view {
     display: flex;
     align-items: center;
@@ -44,9 +48,13 @@ video {
         padding: 0;
         display: flex;
         align-items: center;
-        border: 1px solid #e50914;;
-        background-color: #e50914;;
+        border: 1px solid #e50914;
+        background-color: #e50914;
         overflow: hidden;
+      }
+
+      .button[disabled] {
+        cursor: not-allowed;
       }
       
       .button, .button__icon, .button__text {
@@ -92,4 +100,19 @@ video {
       .button:active {
         border: 1px solid #b20000;
       }
+}
+
+@media(max-width:800px) {
+  .view {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .control-btn {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

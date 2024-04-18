@@ -29,4 +29,23 @@
         font-weight: 800;
     }
 
+    .burger-menu {
+        display: none;
+    }
+
+    .menu-icon {
+        color: #e50914;
+        transform: scale(2);
+    }
+
+}
+
+@media(max-width:650px) {
+    .burger-menu {
+        display: flex !important;
+    }
+
+    nav {
+        display: none;
+    }
 }

@@ -191,6 +191,10 @@ form .form-help :where(label, a) {
     height: 200px;
 }
 
+.mat-tooltip {
+    pointer-events: auto;
+}
+
 @media (max-width: 740px) {
     nav,
     .form-wrapper {

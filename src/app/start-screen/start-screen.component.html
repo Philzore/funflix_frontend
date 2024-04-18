@@ -1,31 +1,19 @@
-<!-- <app-header></app-header> -->
-
 <main>
     <section [hidden]="!videoListActive" class="video-list">
         <div *ngFor="let user of users" class="single-list">
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
-                <div *ngIf="user.imageObject.length > 0" class="video-slider"> <!---->
-                    <!-- <ngx-slick-carousel class="carousel img-slider" #slickModal="slick-carousel" [config]="slideConfig"
-                        (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
-                        (beforeChange)="beforeChange($event)">
-                        @for (slideImage of user.imageObject; track slideImage.posterImage) {
-                        <div ngxSlickItem class="slide">
-                            <img src="{{ slideImage.posterImage }}" (click)="showSingleVideo(user.imageObject)" alt="" width="100%">
-                            <h3 class="text-white">{{slideImage.title}}</h3>
-                        </div>
-                        }
-                    </ngx-slick-carousel> -->
+                <div *ngIf="user.imageObject.length > 0" class="video-slider">
                     <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging">
-
                         <ng-container *ngFor="let slideImage of user.imageObject; let i = index">
-                          <ng-template carouselSlide [id]="">  
-                            <a class="hover-highlight" [owlRouterLink]="['/show_video/' ,slideImage.title, '720p']" [stopLink]="isDragging"><img class="slide-img" [src]="slideImage.posterImage"  [title]="slideImage.title"></a>
-                            <h2 class="text-red">{{slideImage.title}}</h2>
-                          </ng-template>
+                            <ng-template carouselSlide [id]="">
+                                <a class="hover-highlight" (click)="saveVideoAuthor(user.username)" [owlRouterLink]="['/show_video/' ,slideImage.title, '720p']"
+                                    [stopLink]="isDragging"><img class="slide-img" [src]="slideImage.posterImage"
+                                        [title]="slideImage.title"></a>
+                                <h2 class="text-red">{{slideImage.title}}</h2>
+                            </ng-template>
                         </ng-container>
-                    
-                      </owl-carousel-o>
+                    </owl-carousel-o>
                 </div>
                 <div *ngIf="user.imageObject.length == 0" class="text-white">User uploaded no videos, sorry </div>
                 <div *ngIf="user.username == sharedService.currentUser" class="add-video" (click)="openUploadDialog()">
@@ -35,5 +23,3 @@
         </div>
     </section>
 </main>
-
-<!-- <app-footer></app-footer> -->

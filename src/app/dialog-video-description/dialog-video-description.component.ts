@@ -11,6 +11,7 @@ export class DialogVideoDescriptionComponent implements OnInit {
 
   editMode = false ;
   descriptionText = '' ;
+  allowEdit = false ;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -20,6 +21,7 @@ export class DialogVideoDescriptionComponent implements OnInit {
 
   ngOnInit(): void {
       this.loadDescription();
+      this.allowEdit = this.data.editable;
   }
 
   /**
@@ -27,7 +29,6 @@ export class DialogVideoDescriptionComponent implements OnInit {
    * 
    */
   async loadDescription() {
-    console.log(this.data.title);
     let resp = await this.backendService.getVideoDescription(this.data.title, this.data.resolution);
 
     if (resp['success'] == true) {
@@ -44,7 +45,6 @@ export class DialogVideoDescriptionComponent implements OnInit {
   async updateDescription() {
     let resp = await this.backendService.updateVideoDescription(this.data.title, this.data.resolution, this.descriptionText);
 
-    console.log(resp);
     if (resp['success'] == true) {
       this.editMode = false ;
       resp['description'] = this.descriptionText ;

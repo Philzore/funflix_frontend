@@ -8,5 +8,13 @@
                 [active]="activeLink == link"> {{link}} </a>
         </nav>
         <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+        <div class="burger-menu">
+            <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon class="menu-icon">menu</mat-icon></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="activeLink = 'Upload'; openLink()">Upload</button>
+                <button mat-menu-item (click)="activeLink = 'Video List'; openLink()">Video List</button>
+                <button mat-menu-item (click)="activeLink = 'Logout'; openLink()">Logout</button>
+            </mat-menu>
+        </div>
     </div>
 </header>

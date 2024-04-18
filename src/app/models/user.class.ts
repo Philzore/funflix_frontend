@@ -16,7 +16,6 @@ export class User {
     }
 
     public addVideo(video: Video) {
-        console.log('add video');
         const videoURL = `http://127.0.0.1:8000/media/` + video.url;
         const thumbnailURL = `http://127.0.0.1:8000/media/` + video.thumbnail.url;
         const videoTitle = video.title;
@@ -25,7 +24,6 @@ export class User {
         newImageObject.posterImage = thumbnailURL;
         newImageObject.title = videoTitle;
         this.imageObject.push(newImageObject);
-        console.log('Videos nach dem hinzufügen', this.imageObject);
     }
 
     public removeVideo() {

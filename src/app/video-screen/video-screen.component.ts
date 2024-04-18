@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterComponent } from '../footer/footer.component';
-import { ImageObject } from '../models/imageObject.class';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackendService } from '../service/backend.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogVideoDescriptionComponent } from '../dialog-video-description/dialog-video-description.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-video-screen',
@@ -17,7 +16,7 @@ export class VideoScreenComponent implements OnInit {
   singleVideoSource = '';
   currentVideoTitle = '';
   currentVideoResolution = '';
-
+  showTooltip = false ;
   durationInSeconds = 5;
 
   constructor(
@@ -26,17 +25,20 @@ export class VideoScreenComponent implements OnInit {
     private backendService: BackendService,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
+    public sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.currentVideoTitle = params.get('title');
       this.currentVideoResolution = params.get('resolution');
-      console.log('Title:', this.currentVideoTitle);
-      console.log('Auflösung:', this.currentVideoResolution);
       this.loadVideo(this.currentVideoTitle, this.currentVideoResolution);
     });
-
+    if (this.sharedService.currentUser === this.sharedService.currentVideoAuthor) {
+      this.showTooltip = false ;
+    } else {
+      this.showTooltip = true ;
+    }
   }
 
   /**
@@ -63,9 +65,8 @@ export class VideoScreenComponent implements OnInit {
       let resp: Blob = await this.backendService.getVideo(title, resolution);
       const videoBlob = new Blob([resp], { type: 'video/mp4' });
       this.singleVideoSource = URL.createObjectURL(videoBlob);
-      console.log('Blob URL:', this.singleVideoSource);
     } catch (error) {
-      console.error('Error loading video:', error);
+      this.openSnackBar('Error loading video')
     }
   }
 
@@ -87,8 +88,9 @@ export class VideoScreenComponent implements OnInit {
    * 
    */
   openVideoDescription() {
+    let descEditable = !this.showTooltip ;
     this.router.navigateByUrl(`/show_video/${this.currentVideoTitle}/${this.currentVideoResolution}/description`);
-    this.dialog.open(DialogVideoDescriptionComponent, {data: {title : this.currentVideoTitle, resolution: this.currentVideoResolution} });
+    this.dialog.open(DialogVideoDescriptionComponent, {data: {title : this.currentVideoTitle, resolution: this.currentVideoResolution, editable: descEditable} });
   }
 
   /**
@@ -96,17 +98,14 @@ export class VideoScreenComponent implements OnInit {
    * 
    */
   async deletVideo() {
-    console.log(this.currentVideoResolution);
     try {
       let resp = await this.backendService.deleteVideo(this.currentVideoTitle, this.currentVideoResolution);
-      console.log(resp);
       if (resp['success'] = true) {
         this.openSnackBar('Delete complete :)');
         this.router.navigateByUrl(`/start-screen`);
       }
     } catch (error) {
       this.openSnackBar('Error delete Video');
-      console.error('Error delete video:', error);
     }
   }
 }
