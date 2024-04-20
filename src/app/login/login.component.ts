@@ -27,11 +27,12 @@ export class LoginComponent implements AfterViewInit {
 
   rememberMe = false;
   showLogin = true;
+  showHelp = false;
   loginInProgress = false;
-
+  registerInProgress = false;
   durationInSeconds = 5;
 
-  color : ThemePalette= 'primary' ; 
+  color: ThemePalette = 'primary';
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -140,12 +141,29 @@ export class LoginComponent implements AfterViewInit {
    */
   async register() {
     if (this.checkConfirmPassword()) {
+      this.registerInProgress = true;
       let user = new User({ 'username': this.registerUsername.nativeElement.value, 'email': this.registerEmail.nativeElement.value, 'password': this.registerPassword.nativeElement.value });
 
       let resp = await this.backendService.registerNewUser(user);
 
-      this.openSnackBar(resp['error']);
+      if (resp['success'] == true) {
+        this.openSnackBar('Registration success, please confirm email');
+        this.clearRegisterForm();
+      } else if (resp['success'] == false)
+        this.openSnackBar('Registration failed');
     }
+    this.registerInProgress = false ;
+  }
+
+  /**
+   * clear input fields of register form
+   * 
+   */
+  clearRegisterForm(){
+    this.registerUsername.nativeElement.value = '' ;
+    this.registerEmail.nativeElement.value = '' ;
+    this.registerPassword.nativeElement.value = '' ;
+    this.registerConfirmPassword.nativeElement.value = '' ;
   }
 
   /**

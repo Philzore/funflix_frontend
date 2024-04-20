@@ -15,7 +15,7 @@ nav a img {
     border-radius: 4px;
     padding: 70px;
     width: 450px;
-    min-height: 620px;
+    height: 625px;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.75);
 }
@@ -32,6 +32,11 @@ mat-spinner {
     justify-content: center;
     align-items: center;
     height: 175px;
+}
+
+.register-spinner{
+  display: flex;
+  justify-content: center;
 }
 
 .remember-me {
@@ -136,6 +141,51 @@ mat-spinner {
     background-color: #3ae374;
     box-shadow: 0px 0px 20px 2px #3ae374;
     border-radius: 50%;
+  }
+
+  .back-btn{
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .help-text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+  }
+
+  @media(max-width:470px){
+    nav {
+      width: 100dvw;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-wrapper{
+      width: 100dvw;
+    }
+  }
+
+  @media(max-width:330px){
+    
+    .form-wrapper{
+      padding: 25px;
+    }
+
+    .help-text {
+      margin-top: 25px;
+    }
+  }
+
+  @media(max-width:260px){
+    .form-help {
+      flex-direction: column;
+    }
+
+    
   }
   
   @keyframes orbit7456 {

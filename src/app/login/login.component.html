@@ -3,7 +3,7 @@
         <a href="#"><img src="./assets/img/logo.png" alt="logo"></a>
     </nav>
     <!-- login form -->
-    <div [hidden]="!showLogin" class="form-wrapper">
+    <div [hidden]="!showLogin || showHelp" class="form-wrapper">
         <h2>Sign In</h2>
         <form #loginForm>
             <div class="form-control">
@@ -25,27 +25,29 @@
                 <button *ngIf="!loginInProgress" type="submit">Sign In</button>
                 <button *ngIf="!loginInProgress" type="button" (click)="loginAsGuest()">Log in as Guest</button>
             </div>
-            
+
             <div class="form-help">
                 <div class="remember-me">
                     <div class="container">
                         <input type="checkbox" id="cbx" style="display: none;" (change)="rememberMe = !rememberMe">
                         <label for="cbx" class="check">
                             <svg width="18px" height="18px" viewBox="0 0 18 18">
-                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <path
+                                    d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z">
+                                </path>
                                 <polyline points="1 9 7 14 15 4"></polyline>
                             </svg>
                         </label>
                     </div>
                     <label>Remember me</label>
                 </div>
-                <a href="#">Need help?</a>
+                <a (click)="showHelp = true">Need help?</a>
             </div>
         </form>
         <p>New to Funflix? <a (click)="showLogin = false">Sign up now</a></p>
     </div>
     <!-- register form -->
-    <div [hidden]="showLogin" class="form-wrapper">
+    <div [hidden]="showLogin || showHelp" class="form-wrapper">
         <h2>Register</h2>
         <form #registerForm>
             <div class="form-control">
@@ -64,8 +66,29 @@
                 <input type="password" #registerConfirmPassword required>
                 <label>Confirm Password</label>
             </div>
-            <button>Register</button>
+            <div class="register-spinner">
+                <div *ngIf="registerInProgress" class="loader">
+                    <div class="orbe" style="--index: 0"></div>
+                    <div class="orbe" style="--index: 1"></div>
+                    <div class="orbe" style="--index: 2"></div>
+                    <div class="orbe" style="--index: 3"></div>
+                    <div class="orbe" style="--index: 4"></div>
+                </div>
+                <button *ngIf="!registerInProgress">Register</button>
+            </div>
         </form>
         <p><a (click)="showLogin = true">Back to login</a></p>
+    </div>
+    <div [hidden]="!showHelp" class="form-wrapper">
+        <button (click)="showHelp = false" class="back-btn" mat-icon-button>
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="help-text">
+            <span><b>1.</b>Create your own account or login as guest</span>
+            <span><b>2.</b>If you create a new account, you need to confirm your email</span>
+            <span><b>3.</b>After confirmation login with your data</span>
+            <span><b>4.</b>Take a look on other users videos or upload your own videos</span>
+            <span><b>5.</b>You can always change the resolution, but only on your own videos you can change the description and delete your own videos</span>
+        </div>
     </div>
 </section>
