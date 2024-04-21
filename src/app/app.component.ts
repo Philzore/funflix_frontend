@@ -43,7 +43,7 @@ export class AppComponent {
    * 
    */
   checkHide() {
-    if (this.activeComponent == 'LoginComponent' || this.activeComponent == 'DataProtectionComponent' || this.activeComponent == 'ImprintComponent') {
+    if (this.activeComponent == 'LoginComponent' || this.activeComponent == 'DataProtectionComponent' || this.activeComponent == 'ImprintComponent' || this.activeComponent == 'ResetPasswordComponent') {
       this.hideHeader = true;
       this.hideFooter = true;
     } else {

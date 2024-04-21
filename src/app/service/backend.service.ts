@@ -73,6 +73,40 @@ export class BackendService {
   }
 
   /**
+   * send email to the user who want to reset his password
+   * 
+   * @param userEmail where confirm email send
+   * @returns if email has been send
+   */
+  sendResetUserPasswordEmail(userEmail:string){
+    const url = environment.baseUrl + `/reset/${userEmail}/` ;
+    const body = {'email': userEmail} ;
+
+    return lastValueFrom(this.http.post(url, body)) ;
+  }
+
+  /**
+   * send the reset link to the backend and check it
+   * 
+   */
+  checkResetLink(uid:string, token:string) {
+    const url = environment.baseUrl + `/reset/${uid}/${token}/`;
+    
+    return lastValueFrom(this.http.get(url));
+  }
+
+  /**
+   * send new user password to the backend
+   * 
+   */
+  setNewUserPassword(uid:string, token:string, password:string){
+    const url = environment.baseUrl + `/reset/${uid}/${token}/`;
+    const body = {'new_password' : password};
+
+    return lastValueFrom(this.http.post(url, body));
+  }
+
+  /**
    * post new video to backend
    * 
    * @param video to upload 

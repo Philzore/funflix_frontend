@@ -32,6 +32,7 @@ import { HeaderComponent } from './header/header.component';
 import { VideoScreenComponent } from './video-screen/video-screen.component';
 import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-video.component';
 import { DialogVideoDescriptionComponent } from './dialog-video-description/dialog-video-description.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DialogVideoDescriptionComponent } from './dialog-video-description/dial
     VideoScreenComponent,
     DialogUploadVideoComponent,
     DialogVideoDescriptionComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

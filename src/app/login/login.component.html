@@ -3,7 +3,7 @@
         <a href="#"><img src="./assets/img/logo.png" alt="logo"></a>
     </nav>
     <!-- login form -->
-    <div [hidden]="!showLogin || showHelp" class="form-wrapper">
+    <div [hidden]="!showLogin || showHelp || showResetPassword" class="form-wrapper">
         <h2>Sign In</h2>
         <form #loginForm>
             <div class="form-control">
@@ -45,9 +45,11 @@
             </div>
         </form>
         <p>New to Funflix? <a (click)="showLogin = false">Sign up now</a></p>
+        <p>Forgot your password? <a (click)="showResetPassword = true ; router.navigateByUrl('reset');">Reset here</a>
+        </p>
     </div>
     <!-- register form -->
-    <div [hidden]="showLogin || showHelp" class="form-wrapper">
+    <div [hidden]="showLogin || showHelp || showResetPassword" class="form-wrapper">
         <h2>Register</h2>
         <form #registerForm>
             <div class="form-control">
@@ -88,7 +90,33 @@
             <span><b>2.</b>If you create a new account, you need to confirm your email</span>
             <span><b>3.</b>After confirmation login with your data</span>
             <span><b>4.</b>Take a look on other users videos or upload your own videos</span>
-            <span><b>5.</b>You can always change the resolution, but only on your own videos you can change the description and delete your own videos</span>
+            <span><b>5.</b>You can always change the resolution, but only on your own videos you can change the
+                description and delete your own videos</span>
         </div>
     </div>
+    <div [hidden]="!showResetPassword" class="form-wrapper">
+        <button type="button" (click)="showResetPassword = false; router.navigateByUrl('');" class="back-btn"
+            mat-icon-button>
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2>Reset you password</h2>
+        <form #resetForm >
+            <div class="form-control">
+                <input type="text" #emailResetPassword required>
+                <label>Email</label>
+            </div>
+            <div class="reset-spinner">
+                <div *ngIf="resetInProgress" class="loader">
+                    <div class="orbe" style="--index: 0"></div>
+                    <div class="orbe" style="--index: 1"></div>
+                    <div class="orbe" style="--index: 2"></div>
+                    <div class="orbe" style="--index: 3"></div>
+                    <div class="orbe" style="--index: 4"></div>
+                </div>
+                <button *ngIf="!resetInProgress" type="submit">Send Reset Email</button>
+            </div>
+
+        </form>
+    </div>
+
 </section>

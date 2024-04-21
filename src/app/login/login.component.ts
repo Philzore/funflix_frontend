@@ -12,10 +12,11 @@ import { ThemePalette } from '@angular/material/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit , OnInit {
   //Form Elements
   @ViewChild('loginForm') loginForm: ElementRef;
   @ViewChild('registerForm') registerFrom: ElementRef;
+  @ViewChild('resetForm') resetForm: ElementRef;
   //login Elements
   @ViewChild('loginEmail') loginEmail: ElementRef;
   @ViewChild('loginPassword') loginPassword: ElementRef;
@@ -24,12 +25,16 @@ export class LoginComponent implements AfterViewInit {
   @ViewChild('registerUsername') registerUsername: ElementRef;
   @ViewChild('registerPassword') registerPassword: ElementRef;
   @ViewChild('registerConfirmPassword') registerConfirmPassword: ElementRef;
+  //reset password elemts
+  @ViewChild('emailResetPassword') emailResetPassword: ElementRef;
 
   rememberMe = false;
   showLogin = true;
   showHelp = false;
+  showResetPassword = false;
   loginInProgress = false;
   registerInProgress = false;
+  resetInProgress = false ;
   durationInSeconds = 5;
 
   color: ThemePalette = 'primary';
@@ -41,16 +46,27 @@ export class LoginComponent implements AfterViewInit {
     public router: Router,
   ) { }
 
+  ngOnInit(): void {
+    this.router.navigateByUrl('');
+  }
+
   ngAfterViewInit(): void {
     this.loginForm.nativeElement.addEventListener('submit', (event) => {
       event.preventDefault();
-      this.login();
+      this.login();    
     });
 
     this.registerFrom.nativeElement.addEventListener('submit', (event) => {
       event.preventDefault();
       this.register();
     });
+
+    this.resetForm.nativeElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.resetPassword();
+    });
+
+    
   }
 
   /**
@@ -178,6 +194,25 @@ export class LoginComponent implements AfterViewInit {
       this.openSnackBar('Passwords are not equal');
       return false;
     }
+  }
+
+  /**
+   * send email and generate a link to reset your password
+   * 
+   */
+  async resetPassword(){
+    this.resetInProgress = true ;
+    let userEmail = this.emailResetPassword.nativeElement.value ;
+
+    let resp = await this.backendService.sendResetUserPasswordEmail(userEmail) ;
+
+    if (resp['success'] == true) {
+      this.openSnackBar('Confirm the link in your email')
+    } else {
+      this.openSnackBar('Something went wrong :(')
+    }
+
+    this.resetInProgress = false ;
   }
 
 }

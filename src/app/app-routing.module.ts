@@ -8,12 +8,15 @@ import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-
 import { ActivateScreenComponent } from './activate-screen/activate-screen.component';
 import { VideoScreenComponent } from './video-screen/video-screen.component';
 import { DialogVideoDescriptionComponent } from './dialog-video-description/dialog-video-description.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: LoginComponent , children:[
+    {path: 'reset', component: LoginComponent}
+  ]},
   {
     path: 'start-screen', component: StartScreenComponent, children:[
       { path: 'add_video', component: DialogUploadVideoComponent },
@@ -26,6 +29,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'data-protection', component: DataProtectionComponent },
   { path: 'activate/:uidb64/:token', component: ActivateScreenComponent },
+  { path: 'reset/:uidb64/:token', component: ResetPasswordComponent },
 ];
 
 @NgModule({
