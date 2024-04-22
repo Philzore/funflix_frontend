@@ -40,7 +40,7 @@ export class ResetPasswordComponent implements AfterViewInit, OnInit {
       this.uidb64 = encodeURIComponent(params['uidb64']);
       this.token = encodeURIComponent(params['token']);
     });
-    
+
     this.checkResetLink();
 
     this.updatePasswordForm.nativeElement.addEventListener('submit', (event) => {
@@ -80,17 +80,19 @@ export class ResetPasswordComponent implements AfterViewInit, OnInit {
     * 
     */
   async updatePassword() {
-    if (this.checkConfirmPassword()) {
-      this.updatePasswordInProgress = true;
-      const password = this.newPassword.nativeElement.value;
-      let resp = await this.backendService.setNewUserPassword(this.uidb64, this.token, password);
+    if (this.resetValidation()) {
+      if (this.checkConfirmPassword()) {
+        this.updatePasswordInProgress = true;
+        const password = this.newPassword.nativeElement.value;
+        let resp = await this.backendService.setNewUserPassword(this.uidb64, this.token, password);
 
-      if (resp['success'] == true) {
-        this.openSnackBar('Password successfull changed');
-        this.clearRegisterForm();
-        //this.router.navigateByUrl('');
-      } else if (resp['success'] == false)
-        this.openSnackBar('Change password failed');
+        if (resp['success'] == true) {
+          this.openSnackBar('Password successfull changed');
+          this.clearRegisterForm();
+          this.router.navigateByUrl('');
+        } else if (resp['success'] == false)
+          this.openSnackBar('Change password failed');
+      }
     }
     this.updatePasswordInProgress = false;
   }
@@ -100,8 +102,8 @@ export class ResetPasswordComponent implements AfterViewInit, OnInit {
    * 
    */
   clearRegisterForm() {
-    this.newPassword.nativeElement.value = '' ;
-    this.newPasswordConfirm.nativeElement.value = '' ;
+    this.newPassword.nativeElement.value = '';
+    this.newPasswordConfirm.nativeElement.value = '';
   }
 
   /**
@@ -116,5 +118,20 @@ export class ResetPasswordComponent implements AfterViewInit, OnInit {
       this.openSnackBar('Passwords are not equal');
       return false;
     }
+  }
+
+  /**
+  * validate the input fields for reset password form 
+  * 
+  * @returns if there is a validation error or not
+  */
+  resetValidation() {
+    // check password length
+    if (this.newPassword.nativeElement.value.length < 5) {
+      this.openSnackBar('Password must be at least 5 characters long');
+      return false;
+    }
+
+    return true;
   }
 }

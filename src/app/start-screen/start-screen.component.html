@@ -1,6 +1,6 @@
 <main>
     <section [hidden]="!videoListActive" class="video-list">
-        <div *ngFor="let user of users" class="single-list">
+        <div *ngFor="let user of sharedService.userContent" class="single-list">
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
                 <div *ngIf="user.imageObject.length > 0" class="video-slider">

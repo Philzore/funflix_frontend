@@ -20,7 +20,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
 
   videoListActive = true;
 
-  users = [];
+  // users = [];
   
   sliderReady = false;
 
@@ -49,7 +49,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     nav: false
   }
 
-
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -58,15 +57,18 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.sharedService.userContent = [] ;
     if (localStorage.getItem('user')) {
       this.sharedService.currentUser = localStorage.getItem('user');
     }
-
+    this.getUsersFromBackend();
+    this.getThumbnailsAndVideosFromBackend();
   }
 
   ngAfterViewInit(): void {
-    this.getUsersFromBackend();
-    this.getThumbnailsAndVideosFromBackend();
+    // this.getUsersFromBackend();
+    // this.getThumbnailsAndVideosFromBackend();
+    console.log(this.sharedService.userContent);
     this.sliderReady = true;
   }
 
@@ -81,7 +83,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         const userName = resp[index].username;
         let newUser = new User();
         newUser.username = userName;
-        this.users.push(newUser);
+        this.sharedService.userContent.push(newUser);
       }
     } catch (error) {
 
@@ -96,7 +98,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     try {
       let resp: any = await this.backendService.getThumbnailsAndVideos();
       for (const videoInfo of resp) {
-        for (const user of this.users) {
+        for (const user of this.sharedService.userContent) {
           if (user.username === videoInfo.author) {
             const video = new Video({
               id: videoInfo.video_id,

@@ -8,5 +8,7 @@ export class SharedService {
   currentUser = '' ;
   currentVideoAuthor = '' ;
 
+  userContent = [] ;
+
   constructor() { }
 }

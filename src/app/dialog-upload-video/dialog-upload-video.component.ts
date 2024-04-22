@@ -5,6 +5,8 @@ import { BackendService } from '../service/backend.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 import { Router } from '@angular/router';
+import { SharedService } from '../service/shared.service';
+import { ImageObject } from '../models/imageObject.class';
 
 
 @Component({
@@ -31,6 +33,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogUploadVideoComponent>,
     private backendService: BackendService,
+    public sharedService: SharedService,
   ) { }
 
   /**
@@ -69,7 +72,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
    * 
    */
   closeDialog() {
-    this.dialogRef.close() ;
+    this.dialogRef.close();
     this.router.navigateByUrl('start-screen');
   }
 
@@ -94,8 +97,6 @@ export class DialogUploadVideoComponent implements AfterViewInit {
    * 
    */
   postFile() {
-    this.uploadInProgress = true ;
-
     const fileInputElement = this.fileInput.nativeElement;
     const selectedFile = fileInputElement.files[0];
     this.fileToUpload.file = selectedFile;
@@ -105,12 +106,9 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     formData.append('title', this.fileToUpload.title);
     formData.append('description', this.fileToUpload.description);
 
-    if (selectedFile) {
+    if (this.uploadValidation(selectedFile)) {
       this.uploadVideo(formData);
     }
-
-    this.uploadInProgress = false ;
-
   }
 
   /**
@@ -119,15 +117,52 @@ export class DialogUploadVideoComponent implements AfterViewInit {
    * @param formData of the video file
    */
   async uploadVideo(formData) {
+    this.uploadInProgress = true;
     try {
       let resp = await this.backendService.addVideo(formData);
       if (resp['success'] == false) {
         this.openSnackBar(resp['message']);
+      } else {
+        this.openSnackBar('Video uploaded, it take some time to convert ;)');
+        this.addVideoSyncSymbol();
       }
     } catch (err) {
       this.openSnackBar(err);
     }
+    this.uploadInProgress = false;
+
   }
 
+  /**
+   * add a video element to the current user with a sync symbol
+   * to show that the video is not complete converted in the backend
+   *  
+   */
+  addVideoSyncSymbol() {
+    debugger;
+    let foundUser = this.sharedService.userContent.find(user => user.username === this.sharedService.currentUser);
+    let syncPlaceholder = new ImageObject({ title: this.fileToUpload.title, posterImage: '/assets/img/sync.png' });
+    foundUser.imageObject.push(syncPlaceholder);
+  }
+
+  /**
+  * validate the input fields for upload form 
+  * 
+  * @returns if there is a validation error or not
+  */
+  uploadValidation(selectedFile) {
+    // check video title
+    if (this.fileToUpload.title.length < 3 || this.fileToUpload.title.length > 10) {
+      this.openSnackBar('Wrong title length');
+      return false;
+    }
+
+    // check video file exist
+    if (!selectedFile) {
+      this.openSnackBar('No file detected');
+      return false;
+    }
+    return true;
+  }
 
 }
