@@ -17,6 +17,8 @@ export class VideoScreenComponent implements OnInit {
   currentVideoTitle = '';
   currentVideoResolution = '';
   showTooltip = false ;
+  deleteInProgress = false ;
+  loadVideoInProgress = false ;
   durationInSeconds = 5;
 
   constructor(
@@ -59,19 +61,26 @@ export class VideoScreenComponent implements OnInit {
    * @param title of video
    * @param resolution of video 480p/720p/1080p
    */
-  async loadVideo(title:string, resolution:string) {
+  async loadVideo(title:string, resolution:string, attempt:number = 0) {
+    if (attempt >= 3) {
+      this.openSnackBar('Maximum attempts reached. Video could not be loaded.');
+      this.loadVideoInProgress = false;
+      return;
+    }
+
     this.singleVideoSource = '';
+    this.loadVideoInProgress = true ;
+
     try {
       let resp: Blob = await this.backendService.getVideo(title, resolution);
       const videoBlob = new Blob([resp], { type: 'video/mp4' });
       this.singleVideoSource = URL.createObjectURL(videoBlob);
+      let blobSize = resp.size;
+      console.log('blob size:', blobSize/(1024*1024));
     } catch (error) {
       this.openSnackBar('Error loading video')
     }
-  }
-
-  onVideoLoaded() {
-    
+    this.loadVideoInProgress = false ;
   }
 
   /**
@@ -98,6 +107,7 @@ export class VideoScreenComponent implements OnInit {
    * 
    */
   async deletVideo() {
+    this.deleteInProgress = true ;
     try {
       let resp = await this.backendService.deleteVideo(this.currentVideoTitle, this.currentVideoResolution);
       if (resp['success'] = true) {
@@ -107,5 +117,6 @@ export class VideoScreenComponent implements OnInit {
     } catch (error) {
       this.openSnackBar('Error delete Video');
     }
+    this.deleteInProgress = false ;
   }
 }

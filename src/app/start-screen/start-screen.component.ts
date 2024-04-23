@@ -18,9 +18,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class StartScreenComponent implements OnInit, AfterViewInit {
 
-  videoListActive = true;
-
-  // users = [];
+  loadData = false ;
+  usersContentCache = [];
   
   sliderReady = false;
 
@@ -56,18 +55,17 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     private backendService: BackendService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.sharedService.userContent = [] ;
     if (localStorage.getItem('user')) {
       this.sharedService.currentUser = localStorage.getItem('user');
     }
-    this.getUsersFromBackend();
-    this.getThumbnailsAndVideosFromBackend();
+    await this.getUsersFromBackend();
+    await this.getThumbnailsAndVideosFromBackend();
+    this.loadData = true ;
   }
 
   ngAfterViewInit(): void {
-    // this.getUsersFromBackend();
-    // this.getThumbnailsAndVideosFromBackend();
     console.log(this.sharedService.userContent);
     this.sliderReady = true;
   }

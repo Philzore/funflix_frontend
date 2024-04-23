@@ -139,7 +139,6 @@ export class DialogUploadVideoComponent implements AfterViewInit {
    *  
    */
   addVideoSyncSymbol() {
-    debugger;
     let foundUser = this.sharedService.userContent.find(user => user.username === this.sharedService.currentUser);
     let syncPlaceholder = new ImageObject({ title: this.fileToUpload.title, posterImage: '/assets/img/sync.png' });
     foundUser.imageObject.push(syncPlaceholder);
