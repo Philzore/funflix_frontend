@@ -18,9 +18,9 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class StartScreenComponent implements OnInit, AfterViewInit {
 
-  loadData = false ;
+  loadData = false;
   usersContentCache = [];
-  
+
   sliderReady = false;
 
   isDragging: boolean;
@@ -33,16 +33,16 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     autoWidth: false,
     responsive: {
       0: {
-        items: 1
+        items: Math.max(1)
       },
       400: {
-        items: 2
+        items: Math.max(2)
       },
       740: {
-        items: 3
+        items: Math.max(3)
       },
       940: {
-        items: 3
+        items: Math.max(3)
       }
     },
     nav: false
@@ -56,17 +56,22 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   ) { }
 
   async ngOnInit() {
-    this.sharedService.userContent = [] ;
+    console.log('Init start screen');
+    // this.sharedService.userContent = [];
+    this.usersContentCache = [];
     if (localStorage.getItem('user')) {
       this.sharedService.currentUser = localStorage.getItem('user');
     }
+    this.sharedService.loadContentFromLocalStorage();
     await this.getUsersFromBackend();
     await this.getThumbnailsAndVideosFromBackend();
-    this.loadData = true ;
+    this.checkCache();
+    this.loadData = true;
   }
 
   ngAfterViewInit(): void {
-    console.log(this.sharedService.userContent);
+    console.log('sharedService content:', this.sharedService.userContent);
+    console.log('cache content:', this.usersContentCache);
     this.sliderReady = true;
   }
 
@@ -81,7 +86,8 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         const userName = resp[index].username;
         let newUser = new User();
         newUser.username = userName;
-        this.sharedService.userContent.push(newUser);
+        //this.sharedService.userContent.push(newUser);
+        this.usersContentCache.push(newUser);
       }
     } catch (error) {
 
@@ -96,7 +102,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     try {
       let resp: any = await this.backendService.getThumbnailsAndVideos();
       for (const videoInfo of resp) {
-        for (const user of this.sharedService.userContent) {
+        for (const user of this.usersContentCache) {
           if (user.username === videoInfo.author) {
             const video = new Video({
               id: videoInfo.video_id,
@@ -129,7 +135,28 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
    * @param author of the current video
    */
   saveVideoAuthor(author) {
-    this.sharedService.currentVideoAuthor = author ;
+    this.sharedService.currentVideoAuthor = author;
   }
+
+  checkCache() {
+    if (this.sharedService.userContent.length === 0) {
+      this.sharedService.userContent = this.usersContentCache;
+      this.sharedService.saveContentInLocalStorage();
+    }
+
+    for (let i = 0; i < this.sharedService.userContent.length; i++) {
+      let user = this.sharedService.userContent[i];
+      let refUser = this.usersContentCache[i];
+
+      if ((user.imageObject.length < refUser.imageObject.length) || (user.imageObject.length == refUser.imageObject.length) || (refUser.imageObject.length < user.imageObject.length)) {
+        this.sharedService.userContent = this.usersContentCache;
+        this.sharedService.saveContentInLocalStorage();
+      } else {
+        
+      }
+    }
+
+  }
+
 
 }

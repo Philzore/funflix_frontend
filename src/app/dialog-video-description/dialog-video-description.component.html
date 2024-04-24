@@ -1,7 +1,8 @@
 <div class="wrapper">
     <h2>Video Description</h2>
 
-    <section [hidden]="editMode" class="description-container">{{descriptionText}}</section>
+    <section *ngIf="descriptionText != ''" [hidden]="editMode" class="description-container">{{descriptionText}}</section>
+    <section *ngIf="descriptionText == ''" [hidden]="editMode" class="description-container">No description for this Video.</section>
     <textarea [hidden]="!editMode" [(ngModel)]="descriptionText">{{descriptionText}}</textarea>
     
     <div class="btn-container">

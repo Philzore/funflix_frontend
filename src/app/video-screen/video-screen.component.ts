@@ -62,25 +62,28 @@ export class VideoScreenComponent implements OnInit {
    * @param resolution of video 480p/720p/1080p
    */
   async loadVideo(title:string, resolution:string, attempt:number = 0) {
-    if (attempt >= 3) {
+    if (attempt >= 5) {
       this.openSnackBar('Maximum attempts reached. Video could not be loaded.');
       this.loadVideoInProgress = false;
       return;
     }
-
     this.singleVideoSource = '';
     this.loadVideoInProgress = true ;
-
     try {
       let resp: Blob = await this.backendService.getVideo(title, resolution);
       const videoBlob = new Blob([resp], { type: 'video/mp4' });
       this.singleVideoSource = URL.createObjectURL(videoBlob);
       let blobSize = resp.size;
       console.log('blob size:', blobSize/(1024*1024));
+      this.loadVideoInProgress = false ;
     } catch (error) {
-      this.openSnackBar('Error loading video')
+      this.loadVideoInProgress = true ;
+      if (attempt <= 5) {  
+        setTimeout(() => {
+          this.loadVideo(title,resolution,attempt + 1);
+        }, 5000);  
+      }
     }
-    this.loadVideoInProgress = false ;
   }
 
   /**

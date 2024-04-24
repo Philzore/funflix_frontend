@@ -125,6 +125,7 @@ export class DialogUploadVideoComponent implements AfterViewInit {
       } else {
         this.openSnackBar('Video uploaded, it take some time to convert ;)');
         this.addVideoSyncSymbol();
+        this.sharedService.saveContentInLocalStorage();
       }
     } catch (err) {
       this.openSnackBar(err);
