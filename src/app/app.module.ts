@@ -25,6 +25,7 @@ import {VgCoreModule} from '@videogular/ngx-videogular/core';
 import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import {VgStreamingModule} from '@videogular/ngx-videogular/streaming';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import {MatIconModule} from '@angular/material/icon';
 import { FooterComponent } from './footer/footer.component';
@@ -63,6 +64,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    VgStreamingModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     CarouselModule,

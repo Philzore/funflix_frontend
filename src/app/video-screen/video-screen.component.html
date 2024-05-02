@@ -1,10 +1,18 @@
 <section class="view">
     <div class="player-container">
-        <vg-player *ngIf="singleVideoSource != '' && !loadVideoInProgress">
-            <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-                <source [src]="singleVideoSource" type="video/mp4">
-            </video>
-        </vg-player>
+
+        <!-- <vg-player >
+            <video #media id="singleVideo" preload="auto" controls 
+                   type="application/x-mpegURL">
+                <source src="http://127.0.0.1:8000/media/videos/hasi_720p.m3u8">
+            </video> 
+        </vg-player> -->
+
+        <video *ngIf="singleVideoSource !== '' && !loadVideoInProgress" class="video-js" #media id="singleVideo"
+            preload="auto" controls>
+            <!-- <source [src]="singleVideoSource" type="application/x-mpegURL"> -->
+        </video>
+
         <div *ngIf="loadVideoInProgress" class="loader">
             <div class="orbe" style="--index: 0"></div>
             <div class="orbe" style="--index: 1"></div>
@@ -33,8 +41,8 @@
                     </svg></span>
             </button>
             <div>
-                <button matTooltip="You´re not the author" [matTooltipDisabled]="!showTooltip"
-                    [disabled]="showTooltip" (click)="deletVideo()" class="button" type="button">
+                <button matTooltip="You´re not the author" [matTooltipDisabled]="!showTooltip" [disabled]="showTooltip"
+                    (click)="deletVideo()" class="button" type="button">
                     <span class="button__text">Delete</span>
                     <span class="button__icon"><svg class="svg" height="512" viewBox="0 0 512 512" width="512"
                             xmlns="http://www.w3.org/2000/svg">
@@ -57,8 +65,8 @@
                                 style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
                                 x1="328" x2="320" y1="176" y2="400"></line>
                         </svg></span>
-                </button>               
-            </div>           
+                </button>
+            </div>
         </div>
         <div *ngIf="deleteInProgress" class="loader">
             <div class="orbe" style="--index: 0"></div>

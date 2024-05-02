@@ -151,7 +151,7 @@ export class BackendService {
   getVideo(title:string, resolution:string) {
     const url = environment.baseUrl + `/show_video/${title}/${resolution}/` ;
 
-    return lastValueFrom(this.http.get(url, {responseType : 'blob'}));
+    return lastValueFrom(this.http.get(url));
 
   }
 
