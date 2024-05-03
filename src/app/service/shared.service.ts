@@ -13,7 +13,10 @@ export class SharedService {
 
   constructor() { }
 
-
+  /**
+   * save content in local storage
+   * 
+   */
   saveContentInLocalStorage() {
     const localStorageKey = 'userContentData';
 
@@ -26,6 +29,10 @@ export class SharedService {
     localStorage.setItem(localStorageKey, userDataJSON);
   }
 
+  /**
+   * get content from local storage
+   * 
+   */
   loadContentFromLocalStorage() {
     const localStorageKey = 'userContentData';
     const storedDataJSON = localStorage.getItem(localStorageKey);

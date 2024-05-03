@@ -1,25 +1,19 @@
 <section class="view">
     <div class="player-container">
 
-        <!-- <vg-player >
-            <video #media id="singleVideo" preload="auto" controls 
-                   type="application/x-mpegURL">
-                <source src="http://127.0.0.1:8000/media/videos/hasi_720p.m3u8">
-            </video> 
-        </vg-player> -->
+        <div class="video-container" >
+            <video class="video-js" #media id="singleVideo" preload="auto" controls>
+                <source [src]="singleVideoSource" type="application/x-mpegURL">
+            </video>
+        </div>
 
-        <video *ngIf="singleVideoSource !== '' && !loadVideoInProgress" class="video-js" #media id="singleVideo"
-            preload="auto" controls>
-            <!-- <source [src]="singleVideoSource" type="application/x-mpegURL"> -->
-        </video>
-
-        <div *ngIf="loadVideoInProgress" class="loader">
+        <!-- <div *ngIf="loadVideoInProgress && !playerReady" class="loader">
             <div class="orbe" style="--index: 0"></div>
             <div class="orbe" style="--index: 1"></div>
             <div class="orbe" style="--index: 2"></div>
             <div class="orbe" style="--index: 3"></div>
             <div class="orbe" style="--index: 4"></div>
-        </div>
+        </div> -->
     </div>
     <div class="btn-container">
         <div>

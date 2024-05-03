@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 import { SharedService } from '../service/shared.service';
 import videojs from 'video.js';
+import Player from 'video.js/dist/types/player';
 @Component({
   selector: 'app-video-screen',
   templateUrl: './video-screen.component.html',
@@ -22,7 +23,12 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
       src: string,
       type: string,
     }[],
-  };
+  } = {
+      fluid: true,
+      aspectRatio: '16:9',
+      autoplay: false,
+      sources: [],
+    };
 
   singleVideoSource = '';
   currentVideoTitle = '';
@@ -32,7 +38,8 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
   loadVideoInProgress = false;
   durationInSeconds = 5;
 
-  player;
+  player: Player;
+  playerReady = false;
 
   constructor(
     private router: Router,
@@ -94,12 +101,8 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
     this.loadVideoInProgress = true;
     try {
       let resp = await this.backendService.getVideo(title, resolution);
-      
       this.singleVideoSource = `http://127.0.0.1:8000/media/videos/${resp['path']}`;
-      
-      console.log(this.singleVideoSource);
       this.loadVideoInProgress = false;
-      
     } catch (error) {
       console.log(error);
       this.loadVideoInProgress = true;
@@ -115,12 +118,17 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * create a instance of video player with video js
+   * 
+   */
   instanceVideoPlayer() {
-    if (this.media) {
-      this.player = videojs(this.media.nativeElement, this.options, function onPlayerReady() {
-        console.log('onPlayerReady', this);
-      });
-    }
+    this.player = videojs(this.media.nativeElement, this.options, () => { 
+      this.playerReady = true;
+    });
+    this.player.src({ src: this.singleVideoSource, type: "application/x-mpegURL" });
+    this.player.load();
+
   }
 
 

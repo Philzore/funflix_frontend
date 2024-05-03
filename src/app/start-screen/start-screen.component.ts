@@ -138,25 +138,47 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     this.sharedService.currentVideoAuthor = author;
   }
 
+  /**
+   * check if there is a different between data from backend and data in local storage
+   * if there are different and the local stored content don´t include a sync img then 
+   * the local data get an update from backend
+   * 
+   */
   checkCache() {
+    //shared service == current content in local storage
+    //cache content == current content from backend
     if (this.sharedService.userContent.length === 0) {
       this.sharedService.userContent = this.usersContentCache;
       this.sharedService.saveContentInLocalStorage();
     }
 
     for (let i = 0; i < this.sharedService.userContent.length; i++) {
-      let user = this.sharedService.userContent[i];
-      let refUser = this.usersContentCache[i];
-
-      if ((user.imageObject.length < refUser.imageObject.length) || (user.imageObject.length == refUser.imageObject.length) || (refUser.imageObject.length < user.imageObject.length)) {
+      let user = this.sharedService.userContent[i]; //content in local storage
+      let refUser = this.usersContentCache[i]; //content from backend
+      
+      if (!((user.imageObject.length != refUser.imageObject.length) && this.checkForSyncImg(user))) {
         this.sharedService.userContent = this.usersContentCache;
         this.sharedService.saveContentInLocalStorage();
-      } else {
-        
       }
-    }
 
+    }
   }
 
+  /**
+   * check if there is an sync img 
+   * 
+   * @param user to check the imageObject for sync img
+   * @returns true or false if a sync img exist
+   */
+  checkForSyncImg(user) {
+    for (let index = 0; index < user.imageObject.length; index++) {
+      const imageObj = user.imageObject[index];
+      if (imageObj.posterImage === '/assets/img/sync.png') {
+        return true;
+      }
+
+    }
+    return false;
+  }
 
 }
