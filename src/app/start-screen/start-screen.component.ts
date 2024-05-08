@@ -56,8 +56,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   ) { }
 
   async ngOnInit() {
-    console.log('Init start screen');
-    // this.sharedService.userContent = [];
     this.usersContentCache = [];
     if (localStorage.getItem('user')) {
       this.sharedService.currentUser = localStorage.getItem('user');
@@ -70,8 +68,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('sharedService content:', this.sharedService.userContent);
-    console.log('cache content:', this.usersContentCache);
     this.sliderReady = true;
   }
 
