@@ -1,4 +1,4 @@
 export const environment = {
-    prduction: true ,
-    baseUrl : 'http://127.0.0.1:8000'
+    prduction: false ,
+    baseUrl : 'https://funflix.philippmoessl.de'
 };

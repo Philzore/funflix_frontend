@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { User } from '../models/user.class';
 import { Video } from '../models/video.class';

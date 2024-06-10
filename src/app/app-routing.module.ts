@@ -28,8 +28,8 @@ const routes: Routes = [
   },
   { path: 'imprint', component: ImprintComponent },
   { path: 'data-protection', component: DataProtectionComponent },
-  { path: 'activate/:uidb64/:token', component: ActivateScreenComponent },
-  { path: 'reset/:uidb64/:token', component: ResetPasswordComponent },
+  { path: 'activate_account/:uidb64/:token', component: ActivateScreenComponent },
+  { path: 'reset_password/:uidb64/:token', component: ResetPasswordComponent },
 ];
 
 @NgModule({
