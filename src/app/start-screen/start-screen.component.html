@@ -3,7 +3,7 @@
         <div  *ngFor="let user of sharedService.userContent" class="single-list">
             <h2 class="text-white">Video´s from {{user.username}}</h2>
             <div class="video-preview">
-                <div *ngIf="user.imageObject.length > 0" class="video-slider">
+                <div *ngIf="user.imageObject.length > 0" class="video-slider" [ngStyle]="{ 'width': user.username === sharedService.currentUser ? '75%' : '100%' }">
                     <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging">
                         <ng-container *ngFor="let slideImage of user.imageObject; let i = index">
                             <ng-template carouselSlide [id]="">
