@@ -101,7 +101,7 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
     this.loadVideoInProgress = true;
     try {
       let resp = await this.backendService.getVideo(title, resolution);
-      this.singleVideoSource = `http://127.0.0.1:8000/media/videos/${resp['path']}`;
+      this.singleVideoSource = `https://funflix.philippmoessl.de/media/videos/${resp['path']}`;
       this.loadVideoInProgress = false;
     } catch (error) {
       console.log(error);

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DialogUploadVideoComponent } from '../dialog-upload-video/dialog-upload-video.component';
 import { SharedService } from '../service/shared.service';
 import { BackendService } from '../service/backend.service';
@@ -20,7 +20,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
 
   loadData = false;
   usersContentCache = [];
-
+  syncExist = false;
   sliderReady = false;
 
   isDragging: boolean;
@@ -85,6 +85,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
         //this.sharedService.userContent.push(newUser);
         this.usersContentCache.push(newUser);
       }
+      this.usersContentCache = this.sharedService.sortUser(this.usersContentCache);
     } catch (error) {
 
     }
@@ -97,6 +98,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   async getThumbnailsAndVideosFromBackend() {
     try {
       let resp: any = await this.backendService.getThumbnailsAndVideos();
+      console.log('resp', resp);
       for (const videoInfo of resp) {
         for (const user of this.usersContentCache) {
           if (user.username === videoInfo.author) {
@@ -122,6 +124,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
    */
   openUploadDialog() {
     this.router.navigate(['start-screen/add_video']);
+
     this.dialog.open(DialogUploadVideoComponent);
   }
 
@@ -147,16 +150,24 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
       this.sharedService.userContent = this.usersContentCache;
       this.sharedService.saveContentInLocalStorage();
     }
-
+    
     for (let i = 0; i < this.sharedService.userContent.length; i++) {
       let user = this.sharedService.userContent[i]; //content in local storage
       let refUser = this.usersContentCache[i]; //content from backend
-      
-      if (!((user.imageObject.length != refUser.imageObject.length) && this.checkForSyncImg(user))) {
-        this.sharedService.userContent = this.usersContentCache;
-        this.sharedService.saveContentInLocalStorage();
+
+      if (this.checkForSyncImg(user)) {
+        if (!(user.imageObject.length === refUser.imageObject.length)) {
+          this.syncExist = true;
+          break;
+        }
       }
 
+    }
+
+    if (!this.syncExist) {
+      this.sharedService.userContent = this.usersContentCache;
+      let sortedUser = this.sharedService.sortUser(this.sharedService.userContent);
+      this.sharedService.saveContentInLocalStorage();
     }
   }
 

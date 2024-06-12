@@ -16,8 +16,8 @@ export class User {
     }
 
     public addVideo(video: Video) {
-        const videoURL = `http://127.0.0.1:8000/media/` + video.url;
-        const thumbnailURL = `http://127.0.0.1:8000/media/` + video.thumbnail.url;
+        const videoURL = `https://funflix.philippmoessl.de/media/` + video.url;
+        const thumbnailURL = `https://funflix.philippmoessl.de/media/` + video.thumbnail.url;
         const videoTitle = video.title;
         let newImageObject = new ImageObject();
         newImageObject.video = videoURL;

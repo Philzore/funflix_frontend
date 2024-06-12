@@ -117,7 +117,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
           this.openSnackBar('Login failed');
         } else {
           localStorage.setItem('token', resp['token']);
-          localStorage.setItem('user', resp['username']);
+          localStorage.setItem('user', resp.username);
           this.sharedService.currentUser = resp['username'];
           //router navigate
           this.router.navigateByUrl('start-screen');

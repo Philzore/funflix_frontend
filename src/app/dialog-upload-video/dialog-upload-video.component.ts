@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Video } from '../models/video.class';
 import { BackendService } from '../service/backend.service';
@@ -14,7 +14,7 @@ import { ImageObject } from '../models/imageObject.class';
   templateUrl: './dialog-upload-video.component.html',
   styleUrl: './dialog-upload-video.component.scss'
 })
-export class DialogUploadVideoComponent implements AfterViewInit {
+export class DialogUploadVideoComponent implements AfterViewInit, OnInit {
   @ViewChild('uploadForm') uploadForm: ElementRef;
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('fileInfo') fileInfo: ElementRef;
@@ -35,6 +35,10 @@ export class DialogUploadVideoComponent implements AfterViewInit {
     private backendService: BackendService,
     public sharedService: SharedService,
   ) { }
+
+  ngOnInit(): void {
+    
+  }
 
   /**
    * open the snackbar with message
@@ -151,6 +155,11 @@ export class DialogUploadVideoComponent implements AfterViewInit {
   * @returns if there is a validation error or not
   */
   uploadValidation(selectedFile) {
+    //check special chars
+    if (this.containsSpecialCharacters(this.fileToUpload.title)) {
+      this.openSnackBar('Don´t use special chars');
+      return false;
+    }
     // check video title
     if (this.fileToUpload.title.length < 3 || this.fileToUpload.title.length > 10) {
       this.openSnackBar('Wrong title length');
@@ -163,6 +172,18 @@ export class DialogUploadVideoComponent implements AfterViewInit {
       return false;
     }
     return true;
+  }
+
+  /**
+   * check if there are some special chars
+   * 
+   * @param input inputfield
+   * @returns true if there are special chars ; false if not
+   */
+  containsSpecialCharacters(input: string): boolean {
+    const specialCharacters = /`ß[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+    return specialCharacters.test(input);
   }
 
 }

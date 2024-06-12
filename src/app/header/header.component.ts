@@ -17,7 +17,7 @@ export class HeaderComponent {
   background: ThemePalette = undefined;
 
   constructor(
-    private router: Router,
+    public router: Router,
     private dialog: MatDialog,
     public sharedService: SharedService,
   ) {
