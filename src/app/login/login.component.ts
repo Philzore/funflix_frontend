@@ -123,7 +123,7 @@ export class LoginComponent implements AfterViewInit, OnInit {
           this.router.navigateByUrl('start-screen');
         }
       } catch (err) {
-        this.openSnackBar(err);
+        this.openSnackBar('Login failed');
       }
     }
     this.loginInProgress = false;
