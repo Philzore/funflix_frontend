@@ -98,7 +98,6 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   async getThumbnailsAndVideosFromBackend() {
     try {
       let resp: any = await this.backendService.getThumbnailsAndVideos();
-      console.log('resp', resp);
       for (const videoInfo of resp) {
         for (const user of this.usersContentCache) {
           if (user.username === videoInfo.author) {

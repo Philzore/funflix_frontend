@@ -6,9 +6,9 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Funflix_frontend';
- 
+
   hideHeader = true;
   hideFooter = true;
 
@@ -21,8 +21,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-   
-}
+
+  }
 
   /**
    * hide header and footer in case of active component

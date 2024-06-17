@@ -19,7 +19,6 @@ const routes: Routes = [
   ]},
   {
     path: 'start-screen', component: StartScreenComponent, children:[
-      //{ path: 'add_video', component: DialogUploadVideoComponent },
       { path: 'add_video', component: DialogUploadVideoComponent },
     ]
   },
@@ -31,8 +30,6 @@ const routes: Routes = [
   { path: 'data-protection', component: DataProtectionComponent },
   { path: 'activate_account/:uidb64/:token', component: ActivateScreenComponent },
   { path: 'reset_password/:uidb64/:token', component: ResetPasswordComponent },
-  //{ path: 'start-screen/add_video/', redirectTo: 'start-screen', pathMatch: 'full'},
-  //{ path: '**', redirectTo: 'start-screen' },
 ];
 
 @NgModule({

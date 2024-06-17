@@ -104,7 +104,6 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
       this.singleVideoSource = `https://funflix.philippmoessl.de/media/videos/${resp['path']}`;
       this.loadVideoInProgress = false;
     } catch (error) {
-      console.log(error);
       this.loadVideoInProgress = true;
       if (attempt <= 5) {
         setTimeout(() => {

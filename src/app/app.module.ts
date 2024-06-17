@@ -35,6 +35,7 @@ import { DialogUploadVideoComponent } from './dialog-upload-video/dialog-upload-
 import { DialogVideoDescriptionComponent } from './dialog-video-description/dialog-video-description.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
