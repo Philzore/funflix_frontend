@@ -12,9 +12,6 @@ h1 {
 .player-container {
   max-width: 100%;
   width: 80%;
-  //new
-  // display: flex;
-  // justify-content: center;
 }
 
 video {
@@ -26,6 +23,11 @@ video {
 .video-container{
   display: flex;
   z-index: 1;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
 }
 
 .btn-container{

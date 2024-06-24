@@ -137,7 +137,11 @@ export class VideoScreenComponent implements OnInit, AfterViewInit {
    * @param resolution of video 480p/720p/1080p
    */
   switchVideoResolution(resolution: string) {
+    this.loadVideoInProgress = true ;
     this.router.navigateByUrl(`/show_video/${this.currentVideoTitle}/${resolution}`);
+    setTimeout(() => {
+      this.loadVideoInProgress = false ;
+    }, 1000);
   }
 
   /**

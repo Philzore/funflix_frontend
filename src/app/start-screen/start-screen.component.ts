@@ -8,6 +8,8 @@ import { User } from '../models/user.class';
 import { Video } from '../models/video.class';
 import { Thumbnail } from '../models/thumbnail.class';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessageSnackbarComponent } from '../message-snackbar/message-snackbar.component';
 
 
 
@@ -22,6 +24,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
   usersContentCache = [];
   syncExist = false;
   sliderReady = false;
+  durationInSeconds = 5;
 
   isDragging: boolean;
   customOptions: OwlOptions = {
@@ -53,6 +56,7 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     public sharedService: SharedService,
     private backendService: BackendService,
+    private _snackBar: MatSnackBar,
   ) { }
 
   async ngOnInit() {
@@ -117,6 +121,18 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
     }
   }
 
+    /**
+   * open the snackbar with message
+   * 
+   * @param message which shown in snackbar
+   */
+    openSnackBar(message: string) {
+      this._snackBar.openFromComponent(MessageSnackbarComponent, {
+        duration: this.durationInSeconds * 1000,
+        data: { 'message': message },
+      });
+    }
+
   /**
    * open dialog to upload new video
    * 
@@ -132,8 +148,14 @@ export class StartScreenComponent implements OnInit, AfterViewInit {
    * 
    * @param author of the current video
    */
-  saveVideoAuthor(author) {
-    this.sharedService.currentVideoAuthor = author;
+  saveVideoAuthor(author, slideImg) {
+    if (slideImg.endsWith('sync.png') ) {
+      this.router.navigate(['start-screen']);
+      this.openSnackBar('Video stil convert, please wait');
+    } else {
+      this.sharedService.currentVideoAuthor = author;
+    }
+    
   }
 
   /**

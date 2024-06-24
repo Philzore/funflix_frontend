@@ -7,7 +7,7 @@
                     <owl-carousel-o [options]="customOptions" (dragging)="isDragging = $event.dragging">
                         <ng-container *ngFor="let slideImage of user.imageObject; let i = index">
                             <ng-template carouselSlide [id]="">
-                                <a class="hover-highlight" (click)="saveVideoAuthor(user.username)" [owlRouterLink]="['/show_video/' ,slideImage.title, '720p']"
+                                <a class="hover-highlight" (click)="saveVideoAuthor(user.username, slideImage.posterImage)" [owlRouterLink]="['/show_video/' ,slideImage.title, '720p']"
                                     [stopLink]="isDragging"><img class="slide-img" [src]="slideImage.posterImage"
                                         [title]="slideImage.title"></a>
                                 <h2 class="text-red">{{slideImage.title}}</h2>
